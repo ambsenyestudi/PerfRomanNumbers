@@ -15,6 +15,10 @@ namespace RomanNumbers.RDM.Domain
         private string FigureNumbers(int arabic)
         {
             var result = "";
+            if(arabic == 4)
+            {
+                return "IV";
+            }
             if(arabic >= HALF_TEN_ARABIC)
             {
                 result = HALF_TEN;
@@ -27,6 +31,7 @@ namespace RomanNumbers.RDM.Domain
             }
             return result;
         }
+
 
         public override bool Equals(object obj)
         {
