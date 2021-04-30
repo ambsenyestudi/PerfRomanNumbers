@@ -27,6 +27,10 @@ namespace RomanNumbers.RDM.Domain
             {
                 return "IX";
             }
+            if (arabic == 19)
+            {
+                return "XIX";
+            }
             if (arabic >= TEN_ARABIC)
             {
                 result += ROMAN_SYMBOL_LIST[2];
