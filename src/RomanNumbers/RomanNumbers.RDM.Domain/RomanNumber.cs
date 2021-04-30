@@ -27,20 +27,15 @@ namespace RomanNumbers.RDM.Domain
             {
                 return "IX";
             }
-
-            if(arabic >= HALF_TEN_ARABIC)
+            if (arabic >= TEN_ARABIC)
             {
-                if(arabic >= TEN_ARABIC)
-                {
-                    result = ROMAN_SYMBOL_LIST[2];
-                    arabic -= HALF_TEN_ARABIC * 2;
-                }
-                else
-                {
-                    result = ROMAN_SYMBOL_LIST[1];
-                    arabic -= HALF_TEN_ARABIC;
-                }
-                
+                result += ROMAN_SYMBOL_LIST[2];
+                arabic -= HALF_TEN_ARABIC * 2;
+            }
+            if (arabic >= HALF_TEN_ARABIC)
+            {
+                result += ROMAN_SYMBOL_LIST[1];
+                arabic -= HALF_TEN_ARABIC;
             }
 
             if(HasUnitPart(arabic))
