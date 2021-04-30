@@ -6,11 +6,12 @@ namespace RomanNumbers.RDM.Test
 {
     public class RomanNumberShould
     {
-        [Fact]
-        public void ParseOne()
+        [Theory]
+        [InlineData(1,"I")]
+        [InlineData(2, "II")]
+        public void ParseOne(int input, string exptected)
         {
-            var exptected = "I";
-            var sut = new RomanNumber(1);
+            var sut = new RomanNumber(input);
             Assert.True(sut.Equals(exptected));
         }
     }
