@@ -7,7 +7,11 @@ namespace RomanNumbers.RDM.Domain
         private string value = "";
         public RomanNumber(int arabic)
         {
-            if (arabic > 1)
+            if(arabic > 2)
+            {
+                value = "III";
+            }
+            else if (arabic > 1)
             {
                 value = "II";
             }
