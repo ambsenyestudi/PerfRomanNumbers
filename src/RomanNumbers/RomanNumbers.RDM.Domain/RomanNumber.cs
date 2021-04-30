@@ -4,21 +4,20 @@ namespace RomanNumbers.RDM.Domain
 {
     public class RomanNumber
     {
+        private const string UNIT = "I";
         private string value = "";
         public RomanNumber(int arabic)
         {
-            if(arabic > 2)
+            value = FigureUnits(arabic);
+        }
+        private string FigureUnits(int arabic)
+        {
+            var result = "";
+            for (int i = 0; i < arabic; i++)
             {
-                value = "III";
+                result += UNIT;
             }
-            else if (arabic > 1)
-            {
-                value = "II";
-            }
-            else
-            {
-                value = "I";
-            }
+            return result;
         }
 
         public override bool Equals(object obj)
