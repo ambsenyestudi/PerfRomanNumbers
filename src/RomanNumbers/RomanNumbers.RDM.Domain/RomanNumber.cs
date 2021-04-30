@@ -5,6 +5,7 @@ namespace RomanNumbers.RDM.Domain
     public class RomanNumber
     {
         private const int EMPTY_UNIT = 0;
+        private const int SYMBOL_THRESHOLD = 5; 
         private const int MAX_ALLOWED_UNITS = 3;
         private readonly string[] UNIT_LIST = new string[] { "I", "II", "III" };
         private readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
@@ -17,13 +18,16 @@ namespace RomanNumbers.RDM.Domain
         }
         private string FigureNumbers(int arabic)
         {
+            return CalculateTensPart(arabic);
+        }
+        private bool HasUnitPart(int arabic) =>
+            arabic > EMPTY_UNIT &&
+            arabic <= MAX_ALLOWED_UNITS;
+        
+        private string CalculateTensPart(int arabic)
+        {
             var result = "";
-
-            if(arabic == 4)
-            {
-                return "IV";
-            }
-            if(arabic == 9)
+            if (arabic == 9)
             {
                 return "IX";
             }
@@ -31,29 +35,59 @@ namespace RomanNumbers.RDM.Domain
             {
                 return "XIX";
             }
-            if (arabic >= TEN_ARABIC)
+            
+            if (TryGetTenSymbol(arabic, out string tenSymbol))
             {
-                result += ROMAN_SYMBOL_LIST[2];
-                arabic -= HALF_TEN_ARABIC * 2;
+                result += tenSymbol;
+                arabic -= 10;
             }
+            return result + CalculateFivePart(arabic);
+        }
+
+        private string CalculateFivePart(int arabic)
+        {
+            if (arabic == 4)
+            {
+                return "IV";
+            }
+            var result = "";
             if (arabic >= HALF_TEN_ARABIC)
             {
                 result += ROMAN_SYMBOL_LIST[1];
                 arabic -= HALF_TEN_ARABIC;
             }
-
-            if(HasUnitPart(arabic))
+            return result + CalculateUnitPart(arabic);
+        }
+        
+        private string CalculateUnitPart(int arabic)
+        {
+            if (!HasUnitPart(arabic))
             {
-                var unitIndex = arabic - 1;
-                result += UNIT_LIST[unitIndex];
+                return string.Empty;                
             }
 
-            return result;
+            var unitIndex = arabic - 1;
+            return UNIT_LIST[unitIndex];
         }
-        private bool HasUnitPart(int arabic) =>
-            arabic > EMPTY_UNIT &&
-            arabic <= MAX_ALLOWED_UNITS;
 
+        private int ToSymbolIndex(int arabic) =>
+            arabic / SYMBOL_THRESHOLD;
+
+        private bool TryGetTenSymbol(int arabic, out string symbol) 
+        {
+            var index = ToSymbolIndex(arabic);
+            var isTenSymbol = index > 1 && index < 4;
+
+            if (! isTenSymbol)
+            {
+                symbol = string.Empty;
+                return false;
+            }
+            symbol = ROMAN_SYMBOL_LIST[2];
+            return isTenSymbol;
+        }
+            
+        
 
         public override bool Equals(object obj)
         {
