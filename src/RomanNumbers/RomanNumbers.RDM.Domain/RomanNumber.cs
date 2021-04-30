@@ -5,6 +5,8 @@ namespace RomanNumbers.RDM.Domain
     public class RomanNumber
     {
         private const string UNIT = "I";
+        private const int HALF_TEN_ARABIC = 5;
+        private const string HALF_TEN = "V";
         private string value = "";
         public RomanNumber(int arabic)
         {
@@ -12,6 +14,10 @@ namespace RomanNumbers.RDM.Domain
         }
         private string FigureUnits(int arabic)
         {
+            if(arabic > 4)
+            {
+                return HALF_TEN;
+            }
             var result = "";
             for (int i = 0; i < arabic; i++)
             {
