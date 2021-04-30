@@ -7,8 +7,9 @@ namespace RomanNumbers.RDM.Domain
         private const int EMPTY_UNIT = 0;
         private const int MAX_ALLOWED_UNITS = 3;
         private readonly string[] UNIT_LIST = new string[] { "I", "II", "III" };
+        private readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
         private const int HALF_TEN_ARABIC = 5;
-        private const string HALF_TEN = "V";
+        private const int TEN_ARABIC = 10;
         private string value = "";
         public RomanNumber(int arabic)
         {
@@ -25,8 +26,17 @@ namespace RomanNumbers.RDM.Domain
 
             if(arabic >= HALF_TEN_ARABIC)
             {
-                result = HALF_TEN;
-                arabic -= HALF_TEN_ARABIC;
+                if(arabic >= TEN_ARABIC)
+                {
+                    result = ROMAN_SYMBOL_LIST[2];
+                    arabic -= HALF_TEN_ARABIC;
+                }
+                else
+                {
+                    result = ROMAN_SYMBOL_LIST[1];
+                    arabic -= HALF_TEN_ARABIC;
+                }
+                
             }
 
             if(HasUnitPart(arabic))
