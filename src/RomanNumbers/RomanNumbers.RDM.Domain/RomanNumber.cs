@@ -10,15 +10,17 @@ namespace RomanNumbers.RDM.Domain
         private string value = "";
         public RomanNumber(int arabic)
         {
-            value = FigureUnits(arabic);
+            value = FigureNumbers(arabic);
         }
-        private string FigureUnits(int arabic)
+        private string FigureNumbers(int arabic)
         {
-            if(arabic > 4)
-            {
-                return HALF_TEN;
-            }
             var result = "";
+            if(arabic >= HALF_TEN_ARABIC)
+            {
+                result = HALF_TEN;
+                arabic -= HALF_TEN_ARABIC;
+            }
+
             for (int i = 0; i < arabic; i++)
             {
                 result += UNIT;
