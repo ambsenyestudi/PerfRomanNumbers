@@ -7,7 +7,14 @@ namespace RomanNumbers.RDM.Domain
         private string value = "";
         public RomanNumber(int arabic)
         {
-            value = "I";
+            if (arabic > 1)
+            {
+                value = "II";
+            }
+            else
+            {
+                value = "I";
+            }
         }
 
         public override bool Equals(object obj)
