@@ -15,6 +15,7 @@ namespace RomanNumbers.RDM.Test
         [InlineData(6, "VI")]
         [InlineData(9, "IX")]
         [InlineData(10, "X")]
+        [InlineData(13, "XIII")]
         public void ParseOne(int input, string exptected)
         {
             var sut = new RomanNumber(input);
