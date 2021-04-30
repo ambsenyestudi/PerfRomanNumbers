@@ -70,21 +70,15 @@ namespace RomanNumbers.RDM.Domain
             return UNIT_LIST[unitIndex];
         }
 
-        private int ToSymbolIndex(int arabic) =>
-            arabic / SYMBOL_THRESHOLD;
-
         private bool TryGetTenSymbol(int arabic, out string symbol) 
         {
-            var index = ToSymbolIndex(arabic);
-            var isTenSymbol = index > 1 && index < 4;
-
-            if (! isTenSymbol)
+            if (arabic < TEN_ARABIC)
             {
                 symbol = string.Empty;
                 return false;
             }
             symbol = ROMAN_SYMBOL_LIST[2];
-            return isTenSymbol;
+            return true;
         }
             
         
