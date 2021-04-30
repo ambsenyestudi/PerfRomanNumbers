@@ -33,7 +33,7 @@ namespace RomanNumbers.RDM.Domain
                 if(arabic >= TEN_ARABIC)
                 {
                     result = ROMAN_SYMBOL_LIST[2];
-                    arabic -= HALF_TEN_ARABIC;
+                    arabic -= HALF_TEN_ARABIC * 2;
                 }
                 else
                 {
