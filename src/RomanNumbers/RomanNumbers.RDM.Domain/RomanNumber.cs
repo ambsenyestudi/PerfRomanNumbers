@@ -4,7 +4,7 @@ namespace RomanNumbers.RDM.Domain
 {
     public class RomanNumber
     {
-        private const string UNIT = "I";
+        private readonly string[] UNIT_LIST = new string[] { "I", "II", "III" };
         private const int HALF_TEN_ARABIC = 5;
         private const string HALF_TEN = "V";
         private string value = "";
@@ -24,12 +24,8 @@ namespace RomanNumbers.RDM.Domain
                 result = HALF_TEN;
                 arabic -= HALF_TEN_ARABIC;
             }
-
-            for (int i = 0; i < arabic; i++)
-            {
-                result += UNIT;
-            }
-            return result;
+            var unitIndex = arabic - 1;
+            return result + UNIT_LIST[unitIndex];
         }
 
 
