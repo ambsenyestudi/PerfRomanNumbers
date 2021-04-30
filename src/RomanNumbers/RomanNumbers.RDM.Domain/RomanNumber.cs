@@ -23,6 +23,10 @@ namespace RomanNumbers.RDM.Domain
             {
                 return "IV";
             }
+            if(arabic == 9)
+            {
+                return "IX";
+            }
 
             if(arabic >= HALF_TEN_ARABIC)
             {
