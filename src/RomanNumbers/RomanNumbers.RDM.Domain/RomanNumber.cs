@@ -7,7 +7,7 @@ namespace RomanNumbers.RDM.Domain
         private string value = "";
         public RomanNumber(int arabic)
         {
-
+            value = "I";
         }
 
         public override bool Equals(object obj)
