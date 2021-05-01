@@ -26,7 +26,7 @@ namespace RomanNumbers.RDM.Domain
 
         public static bool IsOneBefore(int input, string v)
         {
-            return false;
+            return true;
         }
 
         private string CalculateTensPart(int arabic)
