@@ -48,8 +48,9 @@ namespace RomanNumbers.RDM.Domain
             
             if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
-                return RomanNumber.FromRomanSymbols(RomanSymbol.I, RomanSymbol.X);
+                return FromRomanSymbols(RomanSymbol.I, RomanSymbol.X);
             }
+
             var xTimes = RomanSymbol.X.CalculateNumberOfOcurrances(arabic.Value);
             if(xTimes > 0)
             {
@@ -60,36 +61,38 @@ namespace RomanNumbers.RDM.Domain
                 arabic = arabic.Substract(ocurrances);
                 return new RomanNumber(result, CalculateTensPart(arabic));
             }
-            var tenResult = new RomanNumber();
-            tenResult.value = CalculateFivePart(arabic);
-            return tenResult;
+
+            return CalculateFivePart(arabic);
         }
 
-
-        private string CalculateFivePart(ArabicNumber arabic)
+        private RomanNumber CalculateFivePart(ArabicNumber arabic)
         {
             if (IsOneUnitBefore(arabic, RomanSymbol.V))
             {
-                return $"{RomanSymbol.I}{RomanSymbol.V}";
+                return FromRomanSymbols(RomanSymbol.I, RomanSymbol.V);
             }
-            var result = "";
-            if (arabic.IsGreaterOrEqualTo(RomanSymbol.V))
+
+
+            var vOccurrances = RomanSymbol.V.GetOccurances(arabic.Value);
+            if (vOccurrances.Any())
             {
-                result += RomanSymbol.V;
-                arabic = arabic.Substract(RomanSymbol.V);
+                var result = RomanNumber.FromRomanSymbols(vOccurrances);
+                arabic = arabic.Substract(vOccurrances);
+                return arabic.Value > 0
+                    ? new RomanNumber(result, CalculateTensPart(arabic))
+                    : result;
             }
-            return result + CalculateUnitPart(arabic);
+            return CalculateUnitPart(arabic);
         }
         
-        private string CalculateUnitPart(ArabicNumber arabic)
+        private RomanNumber CalculateUnitPart(ArabicNumber arabic)
         {
             var iOccurrances = RomanSymbol.I.GetOccurances(arabic.Value);
             if (iOccurrances.Any())
             {
-                var result = RomanNumber.FromRomanSymbols(iOccurrances);
-                return result.value;
+                return RomanNumber.FromRomanSymbols(iOccurrances);
             }
-            return "";
+            return new RomanNumber();
         }
 
         public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
