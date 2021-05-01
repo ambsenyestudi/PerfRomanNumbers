@@ -42,7 +42,7 @@ namespace RomanNumbers.RDM.Test
         }
 
         [Theory]
-        [InlineData(40, "XL")]
+        [InlineData(40, "L")]
         public void TenUnitBeforNextSymbolp(int input, string symbol)
         {
             Assert.True(RomanNumber.IsTenUnitBefore(input, RomanSymbol.Parse(symbol)));
