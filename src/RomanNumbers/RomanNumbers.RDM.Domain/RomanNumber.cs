@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
@@ -7,8 +8,8 @@ namespace RomanNumbers.RDM.Domain
         private const int EMPTY_UNIT = 0;
         private const int SYMBOL_THRESHOLD = 5; 
         private const int MAX_ALLOWED_UNITS = 3;
-        private readonly string[] UNIT_LIST = new string[] { "I", "II", "III" };
-        private readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
+        private static readonly string[] UNIT_LIST = new string[] { "I", "II", "III" };
+        private static readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
         private const int HALF_TEN_ARABIC = 5;
         private const int TEN_ARABIC = 10;
         private string value = "";
@@ -24,9 +25,16 @@ namespace RomanNumbers.RDM.Domain
             arabic > EMPTY_UNIT &&
             arabic <= MAX_ALLOWED_UNITS;
 
-        public static bool IsOneBefore(int input, string v)
+        public static bool IsOneBefore(int input, string roman)
         {
-            return true;
+            var evaluatedValue = GetArabicValue(roman);
+            var reminder = evaluatedValue - input;
+            return reminder  == 1;
+        }
+        private static int GetArabicValue(string v)
+        {
+            var index = ROMAN_SYMBOL_LIST.ToList().IndexOf(v);
+            return index * SYMBOL_THRESHOLD;
         }
 
         private string CalculateTensPart(int arabic)
