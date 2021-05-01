@@ -68,26 +68,30 @@ namespace RomanNumbers.RDM.Domain
 
         private RomanNumber CalculateFivePart(ArabicNumber arabic)
         {
-            if (IsOneUnitBefore(arabic, RomanSymbol.V))
-            {
-                return FromRomanSymbols(RomanSymbol.I, RomanSymbol.V);
-            }
             var fiveList = CalculateFromOcurrances(arabic, RomanSymbol.V)
                 .ToArray();
             if(fiveList.Any())
             {
                 arabic = arabic.Substract(fiveList);
             }
+            var resultList = arabic.Value > 0
+                ? fiveList.Concat(CalculateFromOcurrances(arabic, RomanSymbol.I)).ToArray()
+                : fiveList;
 
-            var unitList = CalculateFromOcurrances(arabic, RomanSymbol.I)
-                .ToArray();
-            var resultList = fiveList.Concat(unitList).ToArray();
             return FromRomanSymbols(resultList);
         }
 
 
-        private IEnumerable<RomanSymbol> CalculateFromOcurrances(ArabicNumber arabic, RomanSymbol romanSymbol) =>
-            romanSymbol.GetOccurances(arabic.Value);
+        private IEnumerable<RomanSymbol> CalculateFromOcurrances(ArabicNumber arabic, RomanSymbol romanSymbol)
+        {
+
+            var result = romanSymbol.GetOccurances(arabic.Value);
+            if(!result.Any() && IsOneUnitBefore(arabic, romanSymbol))
+            {
+                return new List<RomanSymbol> { RomanSymbol.I, RomanSymbol.V };
+            }
+            return result;
+        }
 
         public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
         {
