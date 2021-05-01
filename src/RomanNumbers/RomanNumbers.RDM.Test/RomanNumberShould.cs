@@ -61,7 +61,7 @@ namespace RomanNumbers.RDM.Test
         [InlineData(4,"IV")]
         [InlineData(9, "IX")]
         [InlineData(29, "XXIX")]
-        //InlineData(80, "LXXX")]
+        [InlineData(80, "LXXX")]
         public void ParseAnyArabic(int input, string exptected)
         {
             var sut = new RomanNumber(input);
