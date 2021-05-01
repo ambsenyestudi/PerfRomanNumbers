@@ -28,37 +28,34 @@
             }
             return result += CalculateTensPart(arabic);
         }
-        private string CalculateTensPart(int arabic)
+        private string CalculateTensPart(int num)
         {
+            var arabic = new ArabicNumber(num);
             var result = "";
             
-            var xTimes = arabic / RomanSymbol.X.ArabicValue; 
-            if(xTimes > 0)
+            while (arabic.IsGreaterOrEqualTo(RomanSymbol.X))
             {
-                for (int i = 0; i < xTimes; i++)
-                {
-                    result += RomanSymbol.X;
-                    arabic -= RomanSymbol.X.ArabicValue;
-                }
-            }
+                arabic = arabic.Substract(RomanSymbol.X);
+                result += RomanSymbol.X;
+            };
+            
             if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
                 result += $"{RomanSymbol.I}{RomanSymbol.X}";
-                arabic -= 9;
+                arabic = new ArabicNumber(arabic.Value - 9);
             }
             return result + CalculateFivePart(arabic);
         }
 
 
-        private string CalculateFivePart(int num)
+        private string CalculateFivePart(ArabicNumber arabic)
         {
-            var arabic = new ArabicNumber(num);
-            if (IsOneUnitBefore(num, RomanSymbol.V))
+            if (IsOneUnitBefore(arabic, RomanSymbol.V))
             {
                 return $"{RomanSymbol.I}{RomanSymbol.V}";
             }
             var result = "";
-            if (arabic.IsGreatherOrEqualTo(RomanSymbol.V))
+            if (arabic.IsGreaterOrEqualTo(RomanSymbol.V))
             {
                 result += RomanSymbol.V;
                 arabic = arabic.Substract(RomanSymbol.V);
@@ -77,10 +74,10 @@
             return result;
         }
 
-        public static bool IsOneUnitBefore(int input, RomanSymbol romanSymbol)
+        public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
         {
-            var reminder = FigureDifference(romanSymbol, input);
-            return reminder == RomanSymbol.I.ArabicValue;
+            var arabicReminder = arabicNumber.Substract(romanSymbol);
+            return arabicReminder.IsNegativeRoman(RomanSymbol.I);           
         }
 
         public static bool IsHundredUnitBefore(int input, RomanSymbol romanSymbol)

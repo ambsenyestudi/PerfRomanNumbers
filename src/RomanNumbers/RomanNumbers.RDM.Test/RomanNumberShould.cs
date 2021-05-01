@@ -38,7 +38,8 @@ namespace RomanNumbers.RDM.Test
         [InlineData(9, "X")]
         public void OneUnitBeforNextSymbol(int input, string symbol)
         {
-            Assert.True(RomanNumber.IsOneUnitBefore(input, RomanSymbol.Parse(symbol)));
+            var arabic = new ArabicNumber(input);
+            Assert.True(RomanNumber.IsOneUnitBefore(arabic, RomanSymbol.Parse(symbol)));
         }
 
         [Theory]
