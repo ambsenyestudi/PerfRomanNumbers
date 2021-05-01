@@ -53,7 +53,9 @@ namespace RomanNumbers.RDM.Domain
 
         public static bool IsHundredUnitBefore(int input, RomanSymbol romanSymbol)
         {
-            throw new NotImplementedException();
+            var evaluatedValue = romanSymbol.ArabicValue;
+            var reminder = evaluatedValue - input;
+            return reminder == RomanSymbol.C.ArabicValue;
         }
 
         public static bool IsTenUnitBefore(int input, RomanSymbol romanSymbol)
