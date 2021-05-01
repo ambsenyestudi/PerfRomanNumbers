@@ -52,6 +52,12 @@ namespace RomanNumbers.RDM.Domain
             return result;
         }
 
+        public RomanSymbol[] GetOccurances(int num) =>
+            Enumerable.Repeat(this, CalculateNumberOfOcurrances(num))
+            .ToArray();
+        
+
+
         public override bool Equals(object obj)
         {
             var otherRoman = obj as RomanSymbol;

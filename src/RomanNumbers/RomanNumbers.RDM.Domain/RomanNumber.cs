@@ -7,11 +7,6 @@ namespace RomanNumbers.RDM.Domain
         private string value = "";
         private RomanNumber()
         {
-
-        }
-        private RomanNumber(RomanNumber roman, string partRaw)
-        {
-            value = roman + partRaw;
         }
         private RomanNumber(RomanNumber roman, RomanNumber part)
         {
@@ -39,12 +34,11 @@ namespace RomanNumbers.RDM.Domain
 
         private RomanNumber CalculateFiftyPart(ArabicNumber arabic)
         {
-            
-            var lTimes = RomanSymbol.L.CalculateNumberOfOcurrances(arabic.Value);
-            if(lTimes > 0)
+            var lOccurrances = RomanSymbol.L.GetOccurances(arabic.Value);
+            if(lOccurrances.Any())
             {
-                var result = new RomanNumber(RomanSymbol.L);
-                arabic = arabic.Substract(RomanSymbol.L);
+                var result = RomanNumber.FromRomanSymbols(lOccurrances);
+                arabic = arabic.Substract(lOccurrances);
                 return new RomanNumber(result, CalculateTensPart(arabic));
             }
             return CalculateTensPart(arabic);
