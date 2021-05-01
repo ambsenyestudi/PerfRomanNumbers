@@ -7,6 +7,10 @@ namespace RomanNumbers.RDM.Domain
     {
         private static readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
         private string value = "";
+        private RomanNumber(RomanSymbol romanSymbol)
+        {
+            value = romanSymbol.RomanValue;
+        }
         public RomanNumber(int arabic)
         {
             value = FigureNumbers(arabic);
@@ -18,7 +22,13 @@ namespace RomanNumbers.RDM.Domain
 
         private string CalculateFiftyPart(int arabic)
         {
-            return CalculateTensPart(arabic);
+            var result = string.Empty;
+            if(arabic >= RomanSymbol.L.ArabicValue)
+            {
+                result += RomanSymbol.L;
+                arabic -= RomanSymbol.L.ArabicValue;
+            }
+            return result += CalculateTensPart(arabic);
         }
         private string CalculateTensPart(int arabic)
         {
