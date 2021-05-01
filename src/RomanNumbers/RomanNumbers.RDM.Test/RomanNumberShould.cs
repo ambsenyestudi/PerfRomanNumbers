@@ -56,5 +56,15 @@ namespace RomanNumbers.RDM.Test
         {
             Assert.True(RomanNumber.IsHundredUnitBefore(input, RomanSymbol.Parse(symbol)));
         }
+
+        [Theory]
+        [InlineData(4,"IV")]
+        [InlineData(9, "IX")]
+        [InlineData(29, "XXIX")]
+        public void ParseAnyArabic(int input, string exptected)
+        {
+            var sut = new RomanNumber(input);
+            Assert.True(sut.Equals(exptected));
+        }
     }
 }
