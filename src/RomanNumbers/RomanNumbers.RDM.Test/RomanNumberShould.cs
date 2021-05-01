@@ -27,7 +27,7 @@ namespace RomanNumbers.RDM.Test
         public void HaveOneBeforeV()
         {
             int input = 4;
-            Assert.True(RomanNumber.IsOneBefore(input, "V"));
+            Assert.True(RomanNumber.IsOneBefore(input, RomanSymbol.V));
         }
     }
 }

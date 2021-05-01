@@ -25,16 +25,11 @@ namespace RomanNumbers.RDM.Domain
             arabic > EMPTY_UNIT &&
             arabic <= MAX_ALLOWED_UNITS;
 
-        public static bool IsOneBefore(int input, string roman)
+        public static bool IsOneBefore(int input, RomanSymbol romanSymbol)
         {
-            var evaluatedValue = GetArabicValue(roman);
+            var evaluatedValue = romanSymbol.ArabicValue;
             var reminder = evaluatedValue - input;
             return reminder  == 1;
-        }
-        private static int GetArabicValue(string v)
-        {
-            var index = ROMAN_SYMBOL_LIST.ToList().IndexOf(v);
-            return index * SYMBOL_THRESHOLD;
         }
 
         private string CalculateTensPart(int arabic)
