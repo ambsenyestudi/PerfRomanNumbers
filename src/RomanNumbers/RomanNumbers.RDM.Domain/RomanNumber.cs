@@ -15,22 +15,21 @@
         }
         private string FigureNumbers(ArabicNumber arabic)
         {
-            return CalculateFiftyPart(arabic.Value);
+            return CalculateFiftyPart(arabic);
         }
 
-        private string CalculateFiftyPart(int arabic)
+        private string CalculateFiftyPart(ArabicNumber arabic)
         {
             var result = "";   
-            if(arabic >= RomanSymbol.L.ArabicValue)
+            if(arabic.IsGreaterOrEqualTo(RomanSymbol.L))
             {
                 result += RomanSymbol.L;
-                arabic -= RomanSymbol.L.ArabicValue;
+                arabic = arabic.Substract(RomanSymbol.L);
             }
             return result += CalculateTensPart(arabic);
         }
-        private string CalculateTensPart(int num)
+        private string CalculateTensPart(ArabicNumber arabic)
         {
-            var arabic = new ArabicNumber(num);
             var result = "";
             
             while (arabic.IsGreaterOrEqualTo(RomanSymbol.X))
