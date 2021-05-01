@@ -12,6 +12,9 @@ namespace RomanNumbers.RDM.Domain
         public static RomanSymbol X = new RomanSymbol(10, "X");
         public static RomanSymbol L = new RomanSymbol(50, "L");
         public static RomanSymbol C = new RomanSymbol(100, "C");
+        public static RomanSymbol D = new RomanSymbol(500, "D");
+        public static RomanSymbol M = new RomanSymbol(1000, "M");
+
         public int ArabicValue { get; }
         public string RomanValue { get; }
         

@@ -51,6 +51,11 @@ namespace RomanNumbers.RDM.Domain
             return result + CalculateFivePart(arabic);
         }
 
+        public static bool IsHundredUnitBefore(int input, RomanSymbol romanSymbol)
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool IsTenUnitBefore(int input, RomanSymbol romanSymbol)
         {
             var evaluatedValue = romanSymbol.ArabicValue;

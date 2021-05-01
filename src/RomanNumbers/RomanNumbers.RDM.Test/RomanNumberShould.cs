@@ -48,5 +48,13 @@ namespace RomanNumbers.RDM.Test
         {
             Assert.True(RomanNumber.IsTenUnitBefore(input, RomanSymbol.Parse(symbol)));
         }
+
+        [Theory]
+        [InlineData(400, "D")]
+        [InlineData(900, "M")]
+        public void HundredUnitBeforNextSymbolp(int input, string symbol)
+        {
+            Assert.True(RomanNumber.IsHundredUnitBefore(input, RomanSymbol.Parse(symbol)));
+        }
     }
 }
