@@ -72,31 +72,22 @@ namespace RomanNumbers.RDM.Domain
             {
                 return FromRomanSymbols(RomanSymbol.I, RomanSymbol.V);
             }
-
-
-            var vOccurrances = RomanSymbol.V.GetOccurances(arabic.Value);
-            if (vOccurrances.Any())
-            {
-                var result = FromRomanSymbols(vOccurrances);
-                arabic = arabic.Substract(vOccurrances);
-                return arabic.Value > 0
-                    ? new RomanNumber(result, CalculateTensPart(arabic))
-                    : result;
-            }
-            return CalculateUnitPart(arabic);
-        }
-
-        private RomanNumber CalculateUnitPart(ArabicNumber arabic)
-        {
-            var list = CalculateFromOcurrances(arabic, RomanSymbol.I)
+            var fiveList = CalculateFromOcurrances(arabic, RomanSymbol.V)
                 .ToArray();
-            return FromRomanSymbols(list);
+            if(fiveList.Any())
+            {
+                arabic = arabic.Substract(fiveList);
+            }
+
+            var unitList = CalculateFromOcurrances(arabic, RomanSymbol.I)
+                .ToArray();
+            var resultList = fiveList.Concat(unitList).ToArray();
+            return FromRomanSymbols(resultList);
         }
 
-        private IEnumerable<RomanSymbol> CalculateFromOcurrances(ArabicNumber arabic, RomanSymbol romanSymbol)
-        {
-            return RomanSymbol.I.GetOccurances(arabic.Value);
-        }
+
+        private IEnumerable<RomanSymbol> CalculateFromOcurrances(ArabicNumber arabic, RomanSymbol romanSymbol) =>
+            romanSymbol.GetOccurances(arabic.Value);
 
         public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
         {
