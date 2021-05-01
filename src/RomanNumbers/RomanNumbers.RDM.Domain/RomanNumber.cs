@@ -34,9 +34,9 @@ namespace RomanNumbers.RDM.Domain
         private string CalculateTensPart(int arabic)
         {
             var result = "";
-            if (arabic == 9)
+            if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
-                return "IX";
+                return $"{RomanSymbol.I}{RomanSymbol.X}";
             }
             if (arabic == 19)
             {
@@ -53,9 +53,9 @@ namespace RomanNumbers.RDM.Domain
 
         private string CalculateFivePart(int arabic)
         {
-            if (arabic == 4)
+            if (IsOneUnitBefore(arabic, RomanSymbol.V))
             {
-                return "IV";
+                return $"{RomanSymbol.I}{RomanSymbol.V}";
             }
             var result = "";
             if (arabic >= HALF_TEN_ARABIC)
