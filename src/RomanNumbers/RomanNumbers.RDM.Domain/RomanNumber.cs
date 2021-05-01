@@ -50,25 +50,25 @@
         }
 
 
-        private string CalculateFivePart(int arabic)
+        private string CalculateFivePart(int num)
         {
-            if (IsOneUnitBefore(arabic, RomanSymbol.V))
+            var arabic = new ArabicNumber(num);
+            if (IsOneUnitBefore(num, RomanSymbol.V))
             {
                 return $"{RomanSymbol.I}{RomanSymbol.V}";
             }
             var result = "";
-            if (arabic >= RomanSymbol.V.ArabicValue)
+            if (arabic.IsGreatherOrEqualTo(RomanSymbol.V))
             {
                 result += RomanSymbol.V;
-                arabic -= RomanSymbol.V.ArabicValue;
+                arabic = arabic.Substract(RomanSymbol.V);
             }
             return result + CalculateUnitPart(arabic);
         }
         
-        private string CalculateUnitPart(int num)
+        private string CalculateUnitPart(ArabicNumber arabic)
         {
             var result = string.Empty;
-            var arabic = new ArabicNumber(num);
             while(arabic.Value > 0)
             {
                 arabic = arabic.Substract(RomanSymbol.I);
