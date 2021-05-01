@@ -77,6 +77,11 @@
             var arabicReminder = arabicNumber.Substract(romanSymbol);
             return arabicReminder.IsNegativeRoman(RomanSymbol.I);           
         }
+        public static bool IsTenUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
+        {
+            var arabicReminder = arabicNumber.Substract(romanSymbol);
+            return arabicReminder.IsNegativeRoman(RomanSymbol.X);
+        }
 
         public static bool IsHundredUnitBefore(int input, RomanSymbol romanSymbol)
         {
@@ -84,11 +89,7 @@
             return reminder == RomanSymbol.C.ArabicValue;
         }
 
-        public static bool IsTenUnitBefore(int input, RomanSymbol romanSymbol)
-        {
-            var reminder = FigureDifference(romanSymbol, input);
-            return reminder == RomanSymbol.X.ArabicValue;
-        }
+        
 
         private static int FigureDifference(RomanSymbol romanSymbol, int arabicNumber)
         {

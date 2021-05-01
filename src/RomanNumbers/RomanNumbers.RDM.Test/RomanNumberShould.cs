@@ -47,7 +47,8 @@ namespace RomanNumbers.RDM.Test
         [InlineData(90, "C")]
         public void TenUnitBeforNextSymbolp(int input, string symbol)
         {
-            Assert.True(RomanNumber.IsTenUnitBefore(input, RomanSymbol.Parse(symbol)));
+            var arabic = new ArabicNumber(input);
+            Assert.True(RomanNumber.IsTenUnitBefore(arabic, RomanSymbol.Parse(symbol)));
         }
 
         [Theory]
