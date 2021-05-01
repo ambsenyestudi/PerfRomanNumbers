@@ -83,13 +83,13 @@ namespace RomanNumbers.RDM.Domain
         
         private string CalculateUnitPart(ArabicNumber arabic)
         {
-            var result = string.Empty;
-            while(arabic.Value > 0)
+            var iOccurrances = RomanSymbol.I.GetOccurances(arabic.Value);
+            if (iOccurrances.Any())
             {
-                arabic = arabic.Substract(RomanSymbol.I);
-                result += RomanSymbol.I;
-            };
-            return result;
+                var result = RomanNumber.FromRomanSymbols(iOccurrances);
+                return result.value;
+            }
+            return "";
         }
 
         public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
