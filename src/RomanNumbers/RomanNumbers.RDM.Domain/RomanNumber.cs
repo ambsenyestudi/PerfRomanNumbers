@@ -1,28 +1,26 @@
-﻿using System;
-using System.Linq;
-
-namespace RomanNumbers.RDM.Domain
+﻿namespace RomanNumbers.RDM.Domain
 {
     public class RomanNumber
     {
-        private static readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
+        public static RomanNumber Zero { get; } = new RomanNumber(0);
         private string value = "";
-        private RomanNumber(RomanSymbol romanSymbol)
+        public RomanNumber(RomanSymbol romanSymbol)
         {
             value = romanSymbol.RomanValue;
         }
-        public RomanNumber(int arabic)
+        public RomanNumber(int num)
         {
+            var arabic = new ArabicNumber(num);
             value = FigureNumbers(arabic);
         }
-        private string FigureNumbers(int arabic)
+        private string FigureNumbers(ArabicNumber arabic)
         {
-            return CalculateFiftyPart(arabic);
+            return CalculateFiftyPart(arabic.Value);
         }
 
         private string CalculateFiftyPart(int arabic)
         {
-            var result = string.Empty;
+            var result = "";   
             if(arabic >= RomanSymbol.L.ArabicValue)
             {
                 result += RomanSymbol.L;
@@ -67,13 +65,15 @@ namespace RomanNumbers.RDM.Domain
             return result + CalculateUnitPart(arabic);
         }
         
-        private string CalculateUnitPart(int arabic)
+        private string CalculateUnitPart(int num)
         {
             var result = string.Empty;
-            for (int i = 0; i < arabic; i++)
+            var arabic = new ArabicNumber(num);
+            while(arabic.Value > 0)
             {
-                result += RomanSymbol.I.ToString();
-            }
+                arabic = arabic.Substract(RomanSymbol.I);
+                result += RomanSymbol.I;
+            };
             return result;
         }
 
