@@ -23,7 +23,12 @@ namespace RomanNumbers.RDM.Domain
         private bool HasUnitPart(int arabic) =>
             arabic > EMPTY_UNIT &&
             arabic <= MAX_ALLOWED_UNITS;
-        
+
+        public static bool IsOneBefore(int input, string v)
+        {
+            return false;
+        }
+
         private string CalculateTensPart(int arabic)
         {
             var result = "";
@@ -91,6 +96,10 @@ namespace RomanNumbers.RDM.Domain
                 return false;
             }
             return value == romanValue;
+        }
+        public override int GetHashCode()
+        {
+            return value.GetHashCode();
         }
     }
 }

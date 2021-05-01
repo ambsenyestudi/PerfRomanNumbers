@@ -1,5 +1,4 @@
 using RomanNumbers.RDM.Domain;
-using System;
 using Xunit;
 
 namespace RomanNumbers.RDM.Test
@@ -22,6 +21,13 @@ namespace RomanNumbers.RDM.Test
         {
             var sut = new RomanNumber(input);
             Assert.True(sut.Equals(exptected));
+        }
+
+        [Fact]
+        public void HaveOneBeforeV()
+        {
+            int input = 4;
+            Assert.True(RomanNumber.IsOneBefore(input, "V"));
         }
     }
 }
