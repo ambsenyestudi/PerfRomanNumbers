@@ -57,5 +57,8 @@ namespace RomanNumbers.RDM.Domain
         public override int GetHashCode() =>
             ArabicValue.GetHashCode() + RomanValue.GetHashCode();
 
+        public override string ToString() =>
+            RomanValue;
+
     }
 }

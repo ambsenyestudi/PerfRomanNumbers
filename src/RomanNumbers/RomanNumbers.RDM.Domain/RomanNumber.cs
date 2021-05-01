@@ -8,7 +8,6 @@ namespace RomanNumbers.RDM.Domain
         private const int EMPTY_UNIT = 0;
         private const int SYMBOL_THRESHOLD = 5; 
         private const int MAX_ALLOWED_UNITS = 3;
-        private static readonly string[] UNIT_LIST = new string[] { "I", "II", "III" };
         private static readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
         private const int HALF_TEN_ARABIC = 5;
         private const int TEN_ARABIC = 10;
@@ -74,8 +73,12 @@ namespace RomanNumbers.RDM.Domain
                 return string.Empty;                
             }
 
-            var unitIndex = arabic - 1;
-            return UNIT_LIST[unitIndex];
+            var result = string.Empty;
+            for (int i = 0; i < arabic; i++)
+            {
+                result += RomanSymbol.I.ToString();
+            }
+            return result;
         }
 
         private bool TryGetTenSymbol(int arabic, out string symbol) 
