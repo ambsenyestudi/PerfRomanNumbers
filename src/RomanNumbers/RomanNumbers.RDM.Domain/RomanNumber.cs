@@ -1,12 +1,30 @@
-﻿namespace RomanNumbers.RDM.Domain
+﻿using System.Linq;
+
+namespace RomanNumbers.RDM.Domain
 {
     public class RomanNumber
     {
-        public static RomanNumber Zero { get; } = new RomanNumber(0);
         private string value = "";
-        public RomanNumber(RomanSymbol romanSymbol)
+        private RomanNumber()
         {
-            value = romanSymbol.RomanValue;
+
+        }
+        private RomanNumber(RomanNumber roman, string partRaw)
+        {
+            value = roman + partRaw;
+        }
+        private RomanNumber(RomanNumber roman, RomanNumber part)
+        {
+            value = $"{roman}{part}";
+        }
+        public RomanNumber(RomanSymbol romanSymbol, int times = 1)
+        {
+            var result = string.Empty;
+            for (int i = 0; i < times; i++)
+            {
+                result += romanSymbol.RomanValue;
+            }
+            value = result;
         }
         public RomanNumber(int num)
         {
@@ -15,34 +33,42 @@
         }
         private string FigureNumbers(ArabicNumber arabic)
         {
-            return CalculateFiftyPart(arabic);
+            var romanNumber = CalculateFiftyPart(arabic);
+            return romanNumber.value;
         }
 
-        private string CalculateFiftyPart(ArabicNumber arabic)
+        private RomanNumber CalculateFiftyPart(ArabicNumber arabic)
         {
-            var result = "";   
-            if(arabic.IsGreaterOrEqualTo(RomanSymbol.L))
-            {
-                result += RomanSymbol.L;
-                arabic = arabic.Substract(RomanSymbol.L);
-            }
-            return result += CalculateTensPart(arabic);
-        }
-        private string CalculateTensPart(ArabicNumber arabic)
-        {
-            var result = "";
             
-            while (arabic.IsGreaterOrEqualTo(RomanSymbol.X))
+            var lTimes = RomanSymbol.L.CalculateNumberOfOcurrances(arabic.Value);
+            if(lTimes > 0)
             {
-                arabic = arabic.Substract(RomanSymbol.X);
-                result += RomanSymbol.X;
-            };
+                var result = new RomanNumber(RomanSymbol.L);
+                arabic = arabic.Substract(RomanSymbol.L);
+                return new RomanNumber(result, CalculateTensPart(arabic));
+            }
+            return CalculateTensPart(arabic);
+        }
+        private RomanNumber CalculateTensPart(ArabicNumber arabic)
+        {
             
             if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
-                return result + $"{RomanSymbol.I}{RomanSymbol.X}";
+                return RomanNumber.FromRomanSymbols(RomanSymbol.I, RomanSymbol.X);
             }
-            return result + CalculateFivePart(arabic);
+            var xTimes = RomanSymbol.X.CalculateNumberOfOcurrances(arabic.Value);
+            if(xTimes > 0)
+            {
+                var result = new RomanNumber(RomanSymbol.X, xTimes);
+                var ocurrances = Enumerable
+                    .Repeat(RomanSymbol.X, xTimes)
+                    .ToArray();
+                arabic = arabic.Substract(ocurrances);
+                return new RomanNumber(result, CalculateTensPart(arabic));
+            }
+            var tenResult = new RomanNumber();
+            tenResult.value = CalculateFivePart(arabic);
+            return tenResult;
         }
 
 
@@ -83,18 +109,21 @@
             return arabicReminder.IsNegativeRoman(RomanSymbol.X);
         }
 
-        public static bool IsHundredUnitBefore(int input, RomanSymbol romanSymbol)
+        public static bool IsHundredUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
         {
-            var reminder = FigureDifference(romanSymbol, input);
-            return reminder == RomanSymbol.C.ArabicValue;
+            var arabicReminder = arabicNumber.Substract(romanSymbol);
+            return arabicReminder.IsNegativeRoman(RomanSymbol.C);
         }
-
-        
-
-        private static int FigureDifference(RomanSymbol romanSymbol, int arabicNumber)
+        public static RomanNumber FromRomanSymbols(params RomanSymbol[] romanSymbolsList)
         {
-            var evaluatedValue = romanSymbol.ArabicValue;
-            return evaluatedValue - arabicNumber;
+            var result = "";
+            for (int i = 0; i < romanSymbolsList.Length; i++)
+            {
+                result += romanSymbolsList[i].RomanValue;
+            }
+            var romanResult = new RomanNumber();
+            romanResult.value = result;
+            return romanResult;
         }
 
         public override bool Equals(object obj)
@@ -110,5 +139,7 @@
         {
             return value.GetHashCode();
         }
+        public override string ToString() =>
+            value;
     }
 }

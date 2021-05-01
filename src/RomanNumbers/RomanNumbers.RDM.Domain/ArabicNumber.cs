@@ -7,8 +7,15 @@
         {
             Value = arabicNumber;
         }
-        public ArabicNumber Substract(RomanSymbol romanSymbol) =>
-            new ArabicNumber(Value - romanSymbol.ArabicValue);
+        public ArabicNumber Substract(params RomanSymbol[] romanSymbolLisst)
+        {
+            var result = Value;
+            for (int i = 0; i < romanSymbolLisst.Length; i++)
+            {
+                result -= romanSymbolLisst[i].ArabicValue;
+            }
+            return new ArabicNumber(result);
+        }   
 
         public bool IsGreaterThan(RomanSymbol romanSymbol) =>
             Value > romanSymbol.ArabicValue;

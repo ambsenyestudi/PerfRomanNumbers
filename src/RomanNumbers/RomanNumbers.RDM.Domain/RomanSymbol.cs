@@ -42,6 +42,15 @@ namespace RomanNumbers.RDM.Domain
         public static RomanSymbol Parse(string romanRaw) =>
             GetAll().FirstOrDefault(x => x.RomanValue.Equals(romanRaw));
 
+        public int CalculateNumberOfOcurrances(int num)
+        {
+            if(num == 0)
+            {
+                return 0;
+            }
+            var result = num / ArabicValue;
+            return result;
+        }
 
         public override bool Equals(object obj)
         {

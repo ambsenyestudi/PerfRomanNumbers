@@ -56,7 +56,8 @@ namespace RomanNumbers.RDM.Test
         [InlineData(900, "M")]
         public void HundredUnitBeforNextSymbolp(int input, string symbol)
         {
-            Assert.True(RomanNumber.IsHundredUnitBefore(input, RomanSymbol.Parse(symbol)));
+            var arabic = new ArabicNumber(input);
+            Assert.True(RomanNumber.IsHundredUnitBefore(arabic, RomanSymbol.Parse(symbol)));
         }
 
         [Theory]
