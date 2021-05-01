@@ -6,7 +6,6 @@ namespace RomanNumbers.RDM.Domain
     public class RomanNumber
     {
         private const int EMPTY_UNIT = 0;
-        private const int SYMBOL_THRESHOLD = 5; 
         private const int MAX_ALLOWED_UNITS = 3;
         private static readonly string[] ROMAN_SYMBOL_LIST = new string[] { "I", "V", "X" };
         private const int HALF_TEN_ARABIC = 5;
@@ -27,19 +26,20 @@ namespace RomanNumbers.RDM.Domain
         private string CalculateTensPart(int arabic)
         {
             var result = "";
+            
+            var xTimes = arabic / RomanSymbol.X.ArabicValue; 
+            if(xTimes > 0)
+            {
+                for (int i = 0; i < xTimes; i++)
+                {
+                    result += RomanSymbol.X;
+                    arabic -= RomanSymbol.X.ArabicValue;
+                }
+            }
             if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
-                return $"{RomanSymbol.I}{RomanSymbol.X}";
-            }
-            if (arabic == 19)
-            {
-                return "XIX";
-            }
-            
-            if (TryGetTenSymbol(arabic, out string tenSymbol))
-            {
-                result += tenSymbol;
-                arabic -= 10;
+                result += $"{RomanSymbol.I}{RomanSymbol.X}";
+                arabic -= 9;
             }
             return result + CalculateFivePart(arabic);
         }
