@@ -25,7 +25,7 @@ namespace RomanNumbers.RDM.Domain
             arabic > EMPTY_UNIT &&
             arabic <= MAX_ALLOWED_UNITS;
 
-        public static bool IsOneBefore(int input, RomanSymbol romanSymbol)
+        public static bool IsOneUnitBefore(int input, RomanSymbol romanSymbol)
         {
             var evaluatedValue = romanSymbol.ArabicValue;
             var reminder = evaluatedValue - input;

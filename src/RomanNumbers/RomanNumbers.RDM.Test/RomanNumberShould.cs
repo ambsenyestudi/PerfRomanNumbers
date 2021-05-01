@@ -23,11 +23,12 @@ namespace RomanNumbers.RDM.Test
             Assert.True(sut.Equals(exptected));
         }
 
-        [Fact]
-        public void HaveOneBeforeV()
+        [Theory]
+        [InlineData(4, "V")]
+        [InlineData(9, "X")]
+        public void HaveOneBeforeV(int input, string symbol)
         {
-            int input = 4;
-            Assert.True(RomanNumber.IsOneBefore(input, RomanSymbol.V));
+            Assert.True(RomanNumber.IsOneUnitBefore(input, RomanSymbol.Parse(symbol)));
         }
     }
 }

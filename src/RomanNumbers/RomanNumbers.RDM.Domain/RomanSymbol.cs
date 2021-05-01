@@ -25,5 +25,37 @@ namespace RomanNumbers.RDM.Domain
                 BindingFlags.DeclaredOnly)
                 .Select(f => f.GetValue(null))
                 .Cast<RomanSymbol>();
+
+        public static bool IsMember(string romanRaw) =>
+            GetAll().Any(x => x.RomanValue == romanRaw);
+
+        public static bool TryParse(string romanRaw, out RomanSymbol romanSymbol)
+        {
+            romanSymbol = Parse(romanRaw);
+            return romanSymbol != null; 
+        }
+        public static RomanSymbol Parse(string romanRaw) =>
+            GetAll().FirstOrDefault(x => x.RomanValue.Equals(romanRaw));
+
+
+        public override bool Equals(object obj)
+        {
+            var otherRoman = obj as RomanSymbol;
+            if(otherRoman != null)
+            {
+                return ArabicValue == otherRoman.ArabicValue &&
+                    RomanValue == otherRoman.RomanValue;
+            }
+            var romanRaw = obj as string;
+            if(string.IsNullOrWhiteSpace(romanRaw))
+            {
+                return false;
+            }
+            return RomanValue == romanRaw;
+
+        }
+        public override int GetHashCode() =>
+            ArabicValue.GetHashCode() + RomanValue.GetHashCode();
+
     }
 }
