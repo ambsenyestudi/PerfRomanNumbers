@@ -40,8 +40,7 @@
             
             if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
-                result += $"{RomanSymbol.I}{RomanSymbol.X}";
-                arabic = new ArabicNumber(arabic.Value - 9);
+                return result + $"{RomanSymbol.I}{RomanSymbol.X}";
             }
             return result + CalculateFivePart(arabic);
         }
