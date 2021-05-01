@@ -28,7 +28,7 @@ namespace RomanNumbers.RDM.Domain
         {
             var evaluatedValue = romanSymbol.ArabicValue;
             var reminder = evaluatedValue - input;
-            return reminder  == 1;
+            return reminder  == RomanSymbol.I.ArabicValue;
         }
 
         private string CalculateTensPart(int arabic)
@@ -49,6 +49,11 @@ namespace RomanNumbers.RDM.Domain
                 arabic -= 10;
             }
             return result + CalculateFivePart(arabic);
+        }
+
+        public static bool IsTenUnitBefore(int input, RomanSymbol romanSymbol)
+        {
+            throw new NotImplementedException();
         }
 
         private string CalculateFivePart(int arabic)

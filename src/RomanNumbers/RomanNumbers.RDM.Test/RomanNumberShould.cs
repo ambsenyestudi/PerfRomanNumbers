@@ -36,9 +36,16 @@ namespace RomanNumbers.RDM.Test
         [Theory]
         [InlineData(4, "V")]
         [InlineData(9, "X")]
-        public void HaveOneBeforeV(int input, string symbol)
+        public void OneUnitBeforNextSymbol(int input, string symbol)
         {
             Assert.True(RomanNumber.IsOneUnitBefore(input, RomanSymbol.Parse(symbol)));
+        }
+
+        [Theory]
+        [InlineData(40, "XL")]
+        public void TenUnitBeforNextSymbolp(int input, string symbol)
+        {
+            Assert.True(RomanNumber.IsTenUnitBefore(input, RomanSymbol.Parse(symbol)));
         }
     }
 }
