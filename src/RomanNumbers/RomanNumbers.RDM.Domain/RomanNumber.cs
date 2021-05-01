@@ -24,13 +24,6 @@ namespace RomanNumbers.RDM.Domain
             arabic > EMPTY_UNIT &&
             arabic <= MAX_ALLOWED_UNITS;
 
-        public static bool IsOneUnitBefore(int input, RomanSymbol romanSymbol)
-        {
-            var evaluatedValue = romanSymbol.ArabicValue;
-            var reminder = evaluatedValue - input;
-            return reminder  == RomanSymbol.I.ArabicValue;
-        }
-
         private string CalculateTensPart(int arabic)
         {
             var result = "";
@@ -51,18 +44,28 @@ namespace RomanNumbers.RDM.Domain
             return result + CalculateFivePart(arabic);
         }
 
+        public static bool IsOneUnitBefore(int input, RomanSymbol romanSymbol)
+        {
+            var reminder = FigureDifference(romanSymbol, input);
+            return reminder == RomanSymbol.I.ArabicValue;
+        }
+
         public static bool IsHundredUnitBefore(int input, RomanSymbol romanSymbol)
         {
-            var evaluatedValue = romanSymbol.ArabicValue;
-            var reminder = evaluatedValue - input;
+            var reminder = FigureDifference(romanSymbol, input);
             return reminder == RomanSymbol.C.ArabicValue;
         }
 
         public static bool IsTenUnitBefore(int input, RomanSymbol romanSymbol)
         {
-            var evaluatedValue = romanSymbol.ArabicValue;
-            var reminder = evaluatedValue - input;
+            var reminder = FigureDifference(romanSymbol, input);
             return reminder == RomanSymbol.X.ArabicValue; 
+        }
+
+        private static int FigureDifference(RomanSymbol romanSymbol, int arabicNumber)
+        {
+            var evaluatedValue = romanSymbol.ArabicValue;
+            return evaluatedValue - arabicNumber;
         }
 
         private string CalculateFivePart(int arabic)
