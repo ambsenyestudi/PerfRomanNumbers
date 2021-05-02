@@ -46,7 +46,27 @@ namespace RomanNumbers.RDM.Domain
         }
         private RomanNumber CalculateTensPart(ArabicNumber arabic)
         {
-
+            
+            var resultList = CalculateFromOcurrances(arabic, RomanSymbol.X)
+                .ToArray();
+            if (resultList.Any())
+            {
+                arabic = arabic.Substract(resultList);
+            }
+            while (arabic.Value > 0)
+            {
+                //hungo quan 4
+                var currentSymbol = RomanSymbol.GetCloserSymbol(arabic.Value);
+                var currentList = CalculateFromOcurrances(arabic, currentSymbol)
+                .ToArray();
+                if (currentList.Any())
+                {
+                    arabic = arabic.Substract(currentList);
+                }
+                resultList = resultList.Concat(currentList).ToArray();
+            }
+            return FromRomanSymbols(resultList);
+            /*
             if (IsOneUnitBefore(arabic, RomanSymbol.X))
             {
                 return FromRomanSymbols(RomanSymbol.I, RomanSymbol.X);
@@ -64,6 +84,7 @@ namespace RomanNumbers.RDM.Domain
             }
 
             return CalculateFivePart(arabic);
+            */
         }
 
         private RomanNumber CalculateFivePart(ArabicNumber arabic)
@@ -88,7 +109,10 @@ namespace RomanNumbers.RDM.Domain
             var result = romanSymbol.GetOccurances(arabic.Value);
             if(!result.Any() && IsOneUnitBefore(arabic, romanSymbol))
             {
-                return new List<RomanSymbol> { RomanSymbol.I, RomanSymbol.V };
+                if (IsOneUnitBefore(arabic, romanSymbol))
+                {
+                    return new List<RomanSymbol> { RomanSymbol.I, romanSymbol };
+                }
             }
             return result;
         }

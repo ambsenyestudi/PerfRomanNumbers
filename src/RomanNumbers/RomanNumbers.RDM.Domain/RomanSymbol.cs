@@ -55,7 +55,9 @@ namespace RomanNumbers.RDM.Domain
         public RomanSymbol[] GetOccurances(int num) =>
             Enumerable.Repeat(this, CalculateNumberOfOcurrances(num))
             .ToArray();
-        
+
+        public static RomanSymbol GetCloserSymbol(int num) =>
+            GetAll().LastOrDefault(x => x.ArabicValue <= num);
 
 
         public override bool Equals(object obj)
