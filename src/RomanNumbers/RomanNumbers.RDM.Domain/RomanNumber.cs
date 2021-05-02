@@ -58,10 +58,16 @@ namespace RomanNumbers.RDM.Domain
                 arabic = arabic.Substract(resultList);
             }
 
-            var symboCompo = RomanSymbolComposition.Create(arabic.Value);
-            if (symboCompo != RomanSymbolComposition.Empty)
+            if(SpecialSymbolComposition.IV.IsArabicEquivalent(arabic.Value))
             {
-                var specialResult = symboCompo.PrependItems(resultList);
+                var specialResult = resultList.Concat(SpecialSymbolComposition.IV.Items)
+                    .ToArray();
+                return FromRomanSymbols(specialResult);
+            }
+            if (SpecialSymbolComposition.IX.IsArabicEquivalent(arabic.Value))
+            {
+                var specialResult = resultList.Concat(SpecialSymbolComposition.IX.Items)
+                    .ToArray();
                 return FromRomanSymbols(specialResult);
             }
 

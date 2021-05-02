@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
@@ -27,6 +26,15 @@ namespace RomanNumbers.RDM.Domain
             if(num > 8)
             {
                 return new RomanSymbol[0];
+            }
+            
+            if(RomanSymbol.V.IsSmallerThan(num))
+            {
+                var currNum = num - RomanSymbol.V.ArabicValue;
+                var symbolCollection = FromRepetition(RomanSymbol.I, currNum)
+                    .AsEnumerable()
+                    .Prepend(RomanSymbol.V);
+                return symbolCollection.ToArray();
             }
             return FromRepetition(RomanSymbol.I, num);
         }

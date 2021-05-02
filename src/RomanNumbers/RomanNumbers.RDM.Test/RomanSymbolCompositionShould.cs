@@ -5,6 +5,7 @@ namespace RomanNumbers.RDM.Test
 {
     public class RomanSymbolCompositionShould
     {
+        /*
         [Theory]
         [InlineData(4,"IV")]
         [InlineData(9, "IX")]
@@ -22,5 +23,6 @@ namespace RomanNumbers.RDM.Test
             var sut = RomanSymbolComposition.Create(input);
             Assert.Equal(exptected, sut.ToString());
         }
+        */
     }
 }

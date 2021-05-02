@@ -5,7 +5,7 @@ using System.Reflection;
 namespace RomanNumbers.RDM.Domain
 {
     //https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/enumeration-classes-over-enum-types
-    public class RomanSymbol
+    public class RomanSymbol : IRomanConvertible
     {
         public static RomanSymbol I = new RomanSymbol(1, "I");
         public static RomanSymbol V = new RomanSymbol(5, "V");
@@ -23,6 +23,9 @@ namespace RomanNumbers.RDM.Domain
             ArabicValue = arabicValue;
             RomanValue = romanValue;
         }
+
+        public bool IsSmallerThan(int num) =>
+            ArabicValue < num;
 
         public static IEnumerable<RomanSymbol> GetAll() =>
             typeof(RomanSymbol).GetFields(BindingFlags.Public |
