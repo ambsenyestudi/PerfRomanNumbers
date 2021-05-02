@@ -58,22 +58,15 @@ namespace RomanNumbers.RDM.Domain
                 arabic = arabic.Substract(resultList);
             }
 
-            if(SpecialSymbolComposition.IV.IsArabicEquivalent(arabic.Value))
+            if(SpecialRomanSymbol.ContainsEquivalent(arabic.Value))
             {
-                var specialResult = resultList.Concat(SpecialSymbolComposition.IV.Items)
-                    .ToArray();
-                return FromRomanSymbols(specialResult);
-            }
-            if (SpecialSymbolComposition.IX.IsArabicEquivalent(arabic.Value))
-            {
-                var specialResult = resultList.Concat(SpecialSymbolComposition.IX.Items)
+                var specialResult = resultList.Concat(SpecialRomanSymbol.GetItemsFromEquivalent(arabic.Value))
                     .ToArray();
                 return FromRomanSymbols(specialResult);
             }
 
             while (arabic.Value > 0)
             {
-                //hungo quan 4
                 var currentSymbol = RomanSymbol.GetCloserSymbol(arabic.Value);
                 var currentList = CalculateFromOcurrances(arabic, currentSymbol)
                 .ToArray();

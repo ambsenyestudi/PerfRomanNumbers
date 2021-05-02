@@ -2,14 +2,14 @@
 
 namespace RomanNumbers.RDM.Domain
 {
-    public class SpecialSymbolComposition : IRomanConvertible
+    public class SpecialRomanSymbol : IRomanConvertible
     {
-        public static SpecialSymbolComposition IV { get; } = new SpecialSymbolComposition(
+        public static SpecialRomanSymbol IV { get; } = new SpecialRomanSymbol(
             new RomanSymbol[]
             {
                 RomanSymbol.I, RomanSymbol.V
             }, 4);
-        public static SpecialSymbolComposition IX { get; } = new SpecialSymbolComposition(
+        public static SpecialRomanSymbol IX { get; } = new SpecialRomanSymbol(
             new RomanSymbol[]
             {
                 RomanSymbol.I, RomanSymbol.X
@@ -21,7 +21,7 @@ namespace RomanNumbers.RDM.Domain
 
         public string RomanValue { get; }
 
-        private SpecialSymbolComposition(RomanSymbol[] items, int value)
+        private SpecialRomanSymbol(RomanSymbol[] items, int value)
         {
             Items = items;
             RomanValue = string.Join("", items.AsEnumerable());
@@ -44,5 +44,13 @@ namespace RomanNumbers.RDM.Domain
 
         public override string ToString() =>
             string.Join("", Items.ToList());
+
+        public static bool ContainsEquivalent(int num) =>
+            IV.ArabicValue == num || IX.ArabicValue == num;
+
+        public static RomanSymbol[] GetItemsFromEquivalent(int num) =>
+            IX.ArabicValue == num
+            ? IX.Items
+            : IV.Items;
     }
 }
