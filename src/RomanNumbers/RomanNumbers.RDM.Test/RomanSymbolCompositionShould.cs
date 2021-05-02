@@ -16,7 +16,7 @@ namespace RomanNumbers.RDM.Test
 
         [Theory]
         [InlineData(3, "III")]
-        //[InlineData(8, "VIII")]
+        [InlineData(8, "VIII")]
         public void RepetitionCharacters(int input, string exptected)
         {
             var sut = RomanSymbolComposition.Create(input);
