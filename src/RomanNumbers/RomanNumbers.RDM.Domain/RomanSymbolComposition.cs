@@ -4,26 +4,39 @@ namespace RomanNumbers.RDM.Domain
 {
     public class RomanSymbolComposition
     {
-        public const int IV_value = 4;
-        public const int IX_value = 9;
         public static RomanSymbolComposition Empty { get; } = new RomanSymbolComposition(new RomanSymbol[0]);
+        public static RomanSymbolComposition IV { get; } = new RomanSymbolComposition(new RomanSymbol[] { RomanSymbol.I, RomanSymbol.V });
+        public static RomanSymbolComposition IX { get; } = new RomanSymbolComposition(new RomanSymbol[] { RomanSymbol.I, RomanSymbol.X });
         public RomanSymbol[] Items { get; }
-        public static bool IsIV(int num) =>
-            num == IV_value;
+
         private RomanSymbolComposition(RomanSymbol[] items)
         {
             Items = items;
         }
         public static RomanSymbolComposition Create(int num)
         {
-            if(IsIV(num))
+            if(IV.IsArabicEquivalent(num))
             {
-                var symbolList = new RomanSymbol[] { RomanSymbol.I, RomanSymbol.V };
-                return new RomanSymbolComposition(symbolList);
+                return IV;
             }
-            return new RomanSymbolComposition(new RomanSymbol[] { RomanSymbol.I, RomanSymbol.X });
-            //return Empty;
+            if(IX.IsArabicEquivalent(num))
+            {
+                return IX;
+            }
+            return Empty;
         }
+        public bool IsArabicEquivalent(int num) =>
+
+            ToArabicValue() == num;
+        public int ToArabicValue()
+        {
+            if(Items.First()==RomanSymbol.I)
+            {
+                return Items[1].ArabicValue - Items[0].ArabicValue;
+            }
+            return Items.Sum(x => x.ArabicValue);
+        }
+
         public override string ToString() =>
             string.Join("", Items.ToList());
     }
