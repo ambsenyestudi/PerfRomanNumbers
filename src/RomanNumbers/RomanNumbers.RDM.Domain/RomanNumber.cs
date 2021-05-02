@@ -46,51 +46,24 @@ namespace RomanNumbers.RDM.Domain
         }
         private RomanNumber CalculateTensPart(ArabicNumber arabic)
         {
-            if (arabic.Value > 10)
-            {
-                
-            }
-
-            var resultList = CalculateFromOcurrances(arabic, RomanSymbol.X)
+            var tenList = RomanConvertibleCollection.FromRepetition(RomanSymbol.X, arabic.DevidedBy(RomanSymbol.X))
                 .ToArray();
-            if (resultList.Any())
+            if (tenList.Any())
             {
-                arabic = arabic.Substract(resultList);
+                arabic = arabic.Substract(tenList);
             }
 
             if(SpecialRomanSymbol.ContainsEquivalent(arabic.Value))
             {
-                var specialResult = resultList.Concat(SpecialRomanSymbol.GetItemsFromEquivalent(arabic.Value))
+                var specialResult = tenList.Concat(SpecialRomanSymbol.GetItemsFromEquivalent(arabic.Value))
                     .ToArray();
                 return FromRomanSymbols(specialResult);
             }
-
-            while (arabic.Value > 0)
-            {
-                var currentSymbol = RomanSymbol.GetCloserSymbol(arabic.Value);
-                var currentList = CalculateFromOcurrances(arabic, currentSymbol)
+            var collection = RomanConvertibleCollection.FromArabic(arabic);
+            var resultList = tenList.Concat(collection.Items)
                 .ToArray();
-                if (currentList.Any())
-                {
-                    arabic = arabic.Substract(currentList);
-                }
-                resultList = resultList.Concat(currentList).ToArray();
-            }
+
             return FromRomanSymbols(resultList);
-        }
-
-        private IEnumerable<RomanSymbol> CalculateFromOcurrances(ArabicNumber arabic, RomanSymbol romanSymbol)
-        {
-
-            var result = romanSymbol.GetOccurances(arabic.Value);
-            if(!result.Any() && IsOneUnitBefore(arabic, romanSymbol))
-            {
-                if (IsOneUnitBefore(arabic, romanSymbol))
-                {
-                    return new List<RomanSymbol> { RomanSymbol.I, romanSymbol };
-                }
-            }
-            return result;
         }
 
         public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
@@ -109,15 +82,10 @@ namespace RomanNumbers.RDM.Domain
             var arabicReminder = arabicNumber.Substract(romanSymbol);
             return arabicReminder.IsNegativeRoman(RomanSymbol.C);
         }
-        public static RomanNumber FromRomanSymbols(params RomanSymbol[] romanSymbolsList)
+        public static RomanNumber FromRomanSymbols(params RomanConvertible[] romanConvertiblesList)
         {
-            var result = "";
-            for (int i = 0; i < romanSymbolsList.Length; i++)
-            {
-                result += romanSymbolsList[i].RomanValue;
-            }
             var romanResult = new RomanNumber();
-            romanResult.value = result;
+            romanResult.value = string.Join("", romanConvertiblesList.AsEnumerable());
             return romanResult;
         }
 

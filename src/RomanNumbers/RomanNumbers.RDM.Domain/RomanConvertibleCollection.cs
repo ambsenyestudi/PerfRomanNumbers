@@ -7,13 +7,15 @@ namespace RomanNumbers.RDM.Domain
         public static RomanConvertibleCollection Empty { get; } = new RomanConvertibleCollection(new RomanSymbol[0]);
         public RomanConvertible[] Items { get; }
 
-        public static RomanSymbol[] FromRepetition(RomanSymbol romanSymbol, int count) =>
-            Enumerable.Repeat(romanSymbol, count).ToArray();
-
+        
         private RomanConvertibleCollection(RomanConvertible[] items)
         {
             Items = items;
         }
+
+        public static RomanSymbol[] FromRepetition(RomanSymbol romanSymbol, int count) =>
+            Enumerable.Repeat(romanSymbol, count).ToArray();
+
         public static RomanConvertibleCollection FromArabic(ArabicNumber arabic)
         {
             var num = arabic.Value;
@@ -31,7 +33,7 @@ namespace RomanNumbers.RDM.Domain
                 return new RomanSymbol[0];
             }
             
-            if(RomanSymbol.V.IsSmallerThan(num))
+            if(RomanSymbol.V.IsSmallerOrEqualTo(num))
             {
                 var currNum = num - RomanSymbol.V.ArabicValue;
                 var symbolCollection = FromRepetition(RomanSymbol.I, currNum)

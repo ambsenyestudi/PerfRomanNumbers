@@ -19,15 +19,17 @@ namespace RomanNumbers.RDM.Domain
         {
         }
 
-        public bool IsSmallerThan(int num) =>
-            ArabicValue < num;
-
         public static IEnumerable<RomanSymbol> GetAll() =>
             typeof(RomanSymbol).GetFields(BindingFlags.Public |
                 BindingFlags.Static |
                 BindingFlags.DeclaredOnly)
                 .Select(f => f.GetValue(null))
                 .Cast<RomanSymbol>();
+        public bool IsSmallerThan(int num) =>
+            ArabicValue < num;
+
+        public bool IsSmallerOrEqualTo(int num) =>
+            ArabicValue == num || IsSmallerThan(num);
 
         public static bool IsMember(string romanRaw) =>
             GetAll().Any(x => x.RomanValue == romanRaw);

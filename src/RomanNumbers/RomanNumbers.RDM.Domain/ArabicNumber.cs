@@ -55,6 +55,7 @@
             return Value;
         }
 
-        
+        public int DevidedBy(RomanSymbol romanSymbol) =>
+            Value / romanSymbol.ArabicValue;
     }
 }
