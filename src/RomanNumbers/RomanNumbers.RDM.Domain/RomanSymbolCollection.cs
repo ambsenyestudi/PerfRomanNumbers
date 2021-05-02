@@ -21,6 +21,16 @@ namespace RomanNumbers.RDM.Domain
         {
             Items = items;
         }
+
+        public static RomanSymbol[] ComposeFromNum(int num)
+        {
+            if(num > 8)
+            {
+                return new RomanSymbol[0];
+            }
+            return FromRepetition(RomanSymbol.I, num);
+        }
+
         public static bool ContainsCompostedSymbol(int num) =>
             SpecialSymbolsDictionary.ContainsKey(num);
 

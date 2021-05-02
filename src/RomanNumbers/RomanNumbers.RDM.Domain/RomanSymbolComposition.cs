@@ -13,16 +13,16 @@ namespace RomanNumbers.RDM.Domain
         }
         public static RomanSymbolComposition Create(int num)
         {
-            if(num < 4)
-            {
-                var repeatedSymbols = RomanSymbolCollection.FromRepetition(RomanSymbol.I, num);
-                return new RomanSymbolComposition(repeatedSymbols);
-            }
             if(RomanSymbolCollection.ContainsCompostedSymbol(num))
             {
                 var specialSymbolList = RomanSymbolCollection.GetComposedSymbolCollection(num)
                     .ToArray();
                 return new RomanSymbolComposition(specialSymbolList);
+            }
+            if (num < 9)
+            {
+                var symbolList = RomanSymbolCollection.ComposeFromNum(num);
+                return new RomanSymbolComposition(symbolList);
             }
             return Empty;
         }
