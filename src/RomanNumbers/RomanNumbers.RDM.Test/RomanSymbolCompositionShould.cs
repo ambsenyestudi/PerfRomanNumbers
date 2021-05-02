@@ -5,11 +5,12 @@ namespace RomanNumbers.RDM.Test
 {
     public class RomanSymbolCompositionShould
     {
-        [Fact]
-        public void Represent4()
+        [Theory]
+        [InlineData(4,"IV")]
+        [InlineData(9, "IX")]
+        public void Represent4(int input, string exptected)
         {
-            var exptected = "IV";
-            var sut = RomanSymbolComposition.Create(4);
+            var sut = RomanSymbolComposition.Create(input);
             Assert.Equal(exptected, sut.ToString());
         }
     }

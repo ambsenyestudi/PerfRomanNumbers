@@ -21,6 +21,7 @@ namespace RomanNumbers.RDM.Domain
                 var symbolList = new RomanSymbol[] { RomanSymbol.I, RomanSymbol.V };
                 return new RomanSymbolComposition(symbolList);
             }
+            
             return Empty;
         }
         public override string ToString() =>
