@@ -13,6 +13,11 @@ namespace RomanNumbers.RDM.Domain
         }
         public static RomanSymbolComposition Create(int num)
         {
+            if(num < 4)
+            {
+                var repeatedSymbols = RomanSymbolCollection.FromRepetition(RomanSymbol.I, num);
+                return new RomanSymbolComposition(repeatedSymbols);
+            }
             if(RomanSymbolCollection.ContainsCompostedSymbol(num))
             {
                 var specialSymbolList = RomanSymbolCollection.GetComposedSymbolCollection(num)
@@ -30,7 +35,7 @@ namespace RomanNumbers.RDM.Domain
 
         public int ToArabicValue()
         {
-            if(Items.First()==RomanSymbol.I)
+            if(Items.First() == RomanSymbol.I)
             {
                 return Items[1].ArabicValue - Items[0].ArabicValue;
             }

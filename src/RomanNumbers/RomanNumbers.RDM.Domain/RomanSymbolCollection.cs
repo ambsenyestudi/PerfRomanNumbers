@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
@@ -11,6 +13,10 @@ namespace RomanNumbers.RDM.Domain
             [9] = new RomanSymbol[] { RomanSymbol.I, RomanSymbol.X }, //IX
         };
         public RomanSymbol[] Items { get; }
+
+        public static RomanSymbol[] FromRepetition(RomanSymbol romanSymbol, int count) =>
+            Enumerable.Repeat(romanSymbol, count).ToArray();
+
         private RomanSymbolCollection(RomanSymbol[] items)
         {
             Items = items;
