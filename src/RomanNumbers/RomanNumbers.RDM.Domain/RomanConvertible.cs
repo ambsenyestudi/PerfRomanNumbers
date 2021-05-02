@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
@@ -15,11 +16,15 @@ namespace RomanNumbers.RDM.Domain
         }
         
 
-        protected static int ToArabicValue(RomanSymbol[] romanSymbolList)
+        public static int ToArabicValue(IEnumerable<RomanSymbol> romanSymbolList)
         {
+            if(romanSymbolList == null || !romanSymbolList.Any())
+            {
+                return 0;
+            }
             if (romanSymbolList.First() == RomanSymbol.I)
             {
-                return romanSymbolList[1].ArabicValue - romanSymbolList[0].ArabicValue;
+                return romanSymbolList.Last().ArabicValue - romanSymbolList.First().ArabicValue;
             }
             return romanSymbolList.Sum(x => x.ArabicValue);
         }

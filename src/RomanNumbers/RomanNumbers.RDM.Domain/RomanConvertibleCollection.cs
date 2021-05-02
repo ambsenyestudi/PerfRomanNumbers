@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
@@ -24,28 +25,40 @@ namespace RomanNumbers.RDM.Domain
         }
         private static RomanSymbol[] ComposeSymbolsFromNum(int num)
         {
+            var symbolList = RomanSymbol.GetAll()
+                .Reverse().ToArray();
+
+            List<RomanSymbol> result = new List<RomanSymbol>();
+            var currNum = num;
+            var count = 0;
+
+            while(currNum > 0 && count < symbolList.Length)
+            {
+                currNum = currNum - RomanConvertible.ToArabicValue(result.ToArray());
+                var currSymbol = symbolList[count];
+                var part = ExtractSymbolPart(currNum, currSymbol);
+                result.AddRange(part);
+                count++;
+            }
+            
+            return result.ToArray();
+        }
+        private static IEnumerable<RomanSymbol> ExtractSymbolPart(int num, RomanSymbol romanSymbol)
+        {
             if (SpecialRomanSymbol.ContainsEquivalent(num))
             {
                 return SpecialRomanSymbol.GetItemsFromEquivalent(num);
             }
-            if (num > 40)
+            if (romanSymbol.IsSmallerOrEqualTo(num))
             {
-                return new RomanSymbol[0];
+                if(romanSymbol.IsRepitable)
+                {
+                    var count = num / romanSymbol.ArabicValue;
+                    return FromRepetition(romanSymbol, count);
+                }
+                return new RomanSymbol[] { romanSymbol };
             }
-            if(RomanSymbol.X.IsSmallerOrEqualTo(num))
-            {
-                var repetition = num / RomanSymbol.X.ArabicValue;
-                return FromRepetition(RomanSymbol.X, repetition);
-            }
-            if(RomanSymbol.V.IsSmallerOrEqualTo(num))
-            {
-                var currNum = num - RomanSymbol.V.ArabicValue;
-                var symbolCollection = FromRepetition(RomanSymbol.I, currNum)
-                    .AsEnumerable()
-                    .Prepend(RomanSymbol.V);
-                return symbolCollection.ToArray();
-            }
-            return FromRepetition(RomanSymbol.I, num);
+            return new RomanSymbol[0];
         }
 
         public override string ToString() =>
