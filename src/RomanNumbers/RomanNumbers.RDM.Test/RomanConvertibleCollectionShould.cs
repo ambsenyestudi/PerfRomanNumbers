@@ -3,18 +3,21 @@ using Xunit;
 
 namespace RomanNumbers.RDM.Test
 {
-    public class RomanSymbolCompositionShould
+    public class RomanConvertibleCollectionShould
     {
-        /*
+
+        
         [Theory]
         [InlineData(4,"IV")]
         [InlineData(9, "IX")]
         public void RepresentCompositeCharacters(int input, string exptected)
         {
-            var sut = RomanSymbolComposition.Create(input);
-            Assert.Equal(exptected, sut.ToString());
+            var arabic = new ArabicNumber(input);
+            var sut = RomanConvertibleCollection.FromArabic(arabic);
+            var actual = sut.ToString();
+            Assert.Equal(exptected, actual);
         }
-
+        /*
         [Theory]
         [InlineData(3, "III")]
         [InlineData(8, "VIII")]
