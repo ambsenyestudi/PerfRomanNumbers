@@ -5,12 +5,12 @@ namespace RomanNumbers.RDM.Domain
     public class RomanConvertibleCollection
     {
         public static RomanConvertibleCollection Empty { get; } = new RomanConvertibleCollection(new RomanSymbol[0]);
-        public IRomanConvertible[] Items { get; }
+        public RomanConvertible[] Items { get; }
 
         public static RomanSymbol[] FromRepetition(RomanSymbol romanSymbol, int count) =>
             Enumerable.Repeat(romanSymbol, count).ToArray();
 
-        private RomanConvertibleCollection(RomanSymbol[] items)
+        private RomanConvertibleCollection(RomanConvertible[] items)
         {
             Items = items;
         }
