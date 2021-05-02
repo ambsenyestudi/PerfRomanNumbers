@@ -14,15 +14,15 @@ namespace RomanNumbers.RDM.Domain
             Items = items;
         }
 
+        public RomanConvertibleCollection(ArabicNumber arabic)
+        {
+            var num = arabic.Value;
+            Items = ComposeSymbolsFromNum(num);
+        }
+
         public static RomanSymbol[] FromRepetition(RomanSymbol romanSymbol, int count) =>
             Enumerable.Repeat(romanSymbol, count).ToArray();
 
-        public static RomanConvertibleCollection FromArabic(ArabicNumber arabic)
-        {
-            var num = arabic.Value;
-            var romanConvertibleList = ComposeSymbolsFromNum(num);
-            return new RomanConvertibleCollection(romanConvertibleList);
-        }
         private static RomanSymbol[] ComposeSymbolsFromNum(int num)
         {
             var symbolList = RomanSymbol.GetAll()

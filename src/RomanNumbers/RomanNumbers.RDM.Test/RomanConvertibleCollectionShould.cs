@@ -16,7 +16,7 @@ namespace RomanNumbers.RDM.Test
         public void RepresentCompositeCharacters(int input, string exptected)
         {
             var arabic = new ArabicNumber(input);
-            var sut = RomanConvertibleCollection.FromArabic(arabic);
+            var sut = new RomanConvertibleCollection(arabic);
             var actual = sut.ToString();
             Assert.Equal(exptected, actual);
         }
@@ -28,7 +28,7 @@ namespace RomanNumbers.RDM.Test
         public void RepetitionCharacters(int input, string exptected)
         {
             var arabic = new ArabicNumber(input);
-            var sut = RomanConvertibleCollection.FromArabic(arabic);
+            var sut = new RomanConvertibleCollection(arabic);
             var actual = sut.ToString();
             Assert.Equal(exptected, actual);
         }
@@ -44,7 +44,7 @@ namespace RomanNumbers.RDM.Test
         public void TenUnitBeforNextSymbolp(int input, string exptected)
         {
             var arabic = new ArabicNumber(input);
-            var sut = RomanConvertibleCollection.FromArabic(arabic);
+            var sut = new RomanConvertibleCollection(arabic);
             var actual = sut.ToString();
             Assert.Equal(exptected, actual);
         }
