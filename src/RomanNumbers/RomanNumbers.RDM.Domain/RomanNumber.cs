@@ -46,13 +46,25 @@ namespace RomanNumbers.RDM.Domain
         }
         private RomanNumber CalculateTensPart(ArabicNumber arabic)
         {
-            
+            if (arabic.Value > 10)
+            {
+                
+            }
+
             var resultList = CalculateFromOcurrances(arabic, RomanSymbol.X)
                 .ToArray();
             if (resultList.Any())
             {
                 arabic = arabic.Substract(resultList);
             }
+
+            var symboCompo = RomanSymbolComposition.Create(arabic.Value);
+            if (symboCompo != RomanSymbolComposition.Empty)
+            {
+                var specialResult = symboCompo.PrependItems(resultList);
+                return FromRomanSymbols(specialResult);
+            }
+
             while (arabic.Value > 0)
             {
                 //hungo quan 4
@@ -66,42 +78,7 @@ namespace RomanNumbers.RDM.Domain
                 resultList = resultList.Concat(currentList).ToArray();
             }
             return FromRomanSymbols(resultList);
-            /*
-            if (IsOneUnitBefore(arabic, RomanSymbol.X))
-            {
-                return FromRomanSymbols(RomanSymbol.I, RomanSymbol.X);
-            }
-
-            var xTimes = RomanSymbol.X.CalculateNumberOfOcurrances(arabic.Value);
-            if (xTimes > 0)
-            {
-                var result = new RomanNumber(RomanSymbol.X, xTimes);
-                var ocurrances = Enumerable
-                    .Repeat(RomanSymbol.X, xTimes)
-                    .ToArray();
-                arabic = arabic.Substract(ocurrances);
-                return new RomanNumber(result, CalculateTensPart(arabic));
-            }
-
-            return CalculateFivePart(arabic);
-            */
         }
-
-        private RomanNumber CalculateFivePart(ArabicNumber arabic)
-        {
-            var fiveList = CalculateFromOcurrances(arabic, RomanSymbol.V)
-                .ToArray();
-            if(fiveList.Any())
-            {
-                arabic = arabic.Substract(fiveList);
-            }
-            var resultList = arabic.Value > 0
-                ? fiveList.Concat(CalculateFromOcurrances(arabic, RomanSymbol.I)).ToArray()
-                : fiveList;
-
-            return FromRomanSymbols(resultList);
-        }
-
 
         private IEnumerable<RomanSymbol> CalculateFromOcurrances(ArabicNumber arabic, RomanSymbol romanSymbol)
         {
