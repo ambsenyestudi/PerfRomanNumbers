@@ -28,11 +28,15 @@ namespace RomanNumbers.RDM.Domain
             {
                 return SpecialRomanSymbol.GetItemsFromEquivalent(num);
             }
-            if (num > 8)
+            if (num > 40)
             {
                 return new RomanSymbol[0];
             }
-            
+            if(RomanSymbol.X.IsSmallerOrEqualTo(num))
+            {
+                var repetition = num / RomanSymbol.X.ArabicValue;
+                return FromRepetition(RomanSymbol.X, repetition);
+            }
             if(RomanSymbol.V.IsSmallerOrEqualTo(num))
             {
                 var currNum = num - RomanSymbol.V.ArabicValue;
