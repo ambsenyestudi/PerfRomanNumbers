@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
@@ -25,7 +24,9 @@ namespace RomanNumbers.RDM.Domain
         public RomanNumber(int num)
         {
             var arabic = new ArabicNumber(num);
-            value = FigureNumbers(arabic);
+            var romanConvertibleCollection = RomanConvertibleCollection.FromArabic(arabic);
+            var result = romanConvertibleCollection.ToString();
+            value = result;
         }
         private string FigureNumbers(ArabicNumber arabic)
         {
@@ -66,22 +67,7 @@ namespace RomanNumbers.RDM.Domain
             return FromRomanSymbols(resultList);
         }
 
-        public static bool IsOneUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
-        {
-            var arabicReminder = arabicNumber.Substract(romanSymbol);
-            return arabicReminder.IsNegativeRoman(RomanSymbol.I);           
-        }
-        public static bool IsTenUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
-        {
-            var arabicReminder = arabicNumber.Substract(romanSymbol);
-            return arabicReminder.IsNegativeRoman(RomanSymbol.X);
-        }
 
-        public static bool IsHundredUnitBefore(ArabicNumber arabicNumber, RomanSymbol romanSymbol)
-        {
-            var arabicReminder = arabicNumber.Substract(romanSymbol);
-            return arabicReminder.IsNegativeRoman(RomanSymbol.C);
-        }
         public static RomanNumber FromRomanSymbols(params RomanConvertible[] romanConvertiblesList)
         {
             var romanResult = new RomanNumber();

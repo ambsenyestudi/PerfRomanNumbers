@@ -33,11 +33,14 @@ namespace RomanNumbers.RDM.Domain
             var count = 0;
 
             while(currNum > 0 && count < symbolList.Length)
-            {
-                currNum = currNum - RomanConvertible.ToArabicValue(result.ToArray());
+            {   
                 var currSymbol = symbolList[count];
                 var part = ExtractSymbolPart(currNum, currSymbol);
-                result.AddRange(part);
+                if (part.Any())
+                {
+                    result.AddRange(part);
+                    currNum = num - RomanConvertible.ToArabicValue(result.ToArray());
+                }
                 count++;
             }
             

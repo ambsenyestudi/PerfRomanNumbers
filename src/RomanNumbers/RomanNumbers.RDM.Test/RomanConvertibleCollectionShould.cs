@@ -32,5 +32,22 @@ namespace RomanNumbers.RDM.Test
             var actual = sut.ToString();
             Assert.Equal(exptected, actual);
         }
+
+
+        [Theory]
+        [InlineData(5, "V")]
+        [InlineData(10, "X")]
+        [InlineData(50, "L")]
+        [InlineData(100, "C")]
+        [InlineData(500, "D")]
+        [InlineData(1000, "M")]
+        public void TenUnitBeforNextSymbolp(int input, string exptected)
+        {
+            var arabic = new ArabicNumber(input);
+            var sut = RomanConvertibleCollection.FromArabic(arabic);
+            var actual = sut.ToString();
+            Assert.Equal(exptected, actual);
+        }
+
     }
 }

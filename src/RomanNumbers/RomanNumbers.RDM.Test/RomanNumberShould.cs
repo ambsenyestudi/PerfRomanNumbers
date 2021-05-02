@@ -33,32 +33,7 @@ namespace RomanNumbers.RDM.Test
         }
 
 
-        [Theory]
-        [InlineData(4, "V")]
-        [InlineData(9, "X")]
-        public void OneUnitBeforNextSymbol(int input, string symbol)
-        {
-            var arabic = new ArabicNumber(input);
-            Assert.True(RomanNumber.IsOneUnitBefore(arabic, RomanSymbol.Parse(symbol)));
-        }
-
-        [Theory]
-        [InlineData(40, "L")]
-        [InlineData(90, "C")]
-        public void TenUnitBeforNextSymbolp(int input, string symbol)
-        {
-            var arabic = new ArabicNumber(input);
-            Assert.True(RomanNumber.IsTenUnitBefore(arabic, RomanSymbol.Parse(symbol)));
-        }
-
-        [Theory]
-        [InlineData(400, "D")]
-        [InlineData(900, "M")]
-        public void HundredUnitBeforNextSymbolp(int input, string symbol)
-        {
-            var arabic = new ArabicNumber(input);
-            Assert.True(RomanNumber.IsHundredUnitBefore(arabic, RomanSymbol.Parse(symbol)));
-        }
+        
 
         [Theory]
         [InlineData(4,"IV")]
