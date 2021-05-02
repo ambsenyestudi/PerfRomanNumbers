@@ -12,6 +12,7 @@ namespace RomanNumbers.RDM.Test
         [InlineData(9, "IX")]
         [InlineData(14, "XIV")]
         [InlineData(19, "XIX")]
+        [InlineData(40, "XL")]
         public void RepresentCompositeCharacters(int input, string exptected)
         {
             var arabic = new ArabicNumber(input);

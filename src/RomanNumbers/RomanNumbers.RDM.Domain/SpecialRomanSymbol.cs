@@ -14,23 +14,32 @@ namespace RomanNumbers.RDM.Domain
             {
                 RomanSymbol.I, RomanSymbol.X
             });
+        public static SpecialRomanSymbol XL { get; } = new SpecialRomanSymbol(
+            new RomanSymbol[]
+            {
+                RomanSymbol.X, RomanSymbol.L
+            });
+        private static SpecialRomanSymbol[] specialList = new SpecialRomanSymbol[]
+            {
+                IV, IX, XL
+            };
 
         public RomanSymbol[] Items { get; }
 
         private SpecialRomanSymbol(RomanSymbol[] items):base(items)
         {
-            Items = items;       
+            Items = items;
          }
          
         public bool IsArabicEquivalent(int num) =>
             ArabicValue == num;
-        
+
         public static bool ContainsEquivalent(int num) =>
-            IV.ArabicValue == num || IX.ArabicValue == num;
+            specialList.Any(ss => ss.ArabicValue == num);
 
         public static RomanSymbol[] GetItemsFromEquivalent(int num) =>
-            IX.ArabicValue == num
-            ? IX.Items
-            : IV.Items;
+            ContainsEquivalent(num)
+            ? specialList.First(ss => ss.ArabicValue == num).Items
+            : new RomanSymbol[0];
     }
 }

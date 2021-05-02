@@ -16,18 +16,39 @@ namespace RomanNumbers.RDM.Domain
         }
         
 
-        public static int ToArabicValue(IEnumerable<RomanSymbol> romanSymbolList)
+        public static int ToArabicValue(IEnumerable<RomanSymbol> romanSymbolCollection)
         {
-            if(romanSymbolList == null || !romanSymbolList.Any())
+            if(romanSymbolCollection == null || !romanSymbolCollection.Any())
             {
                 return 0;
             }
-            if (romanSymbolList.First() == RomanSymbol.I)
+            var result = 0;
+            var romanSymbolList = romanSymbolCollection.ToArray();
+            for (int i = 0; i < romanSymbolList.Length; i++)
             {
-                return romanSymbolList.Last().ArabicValue - romanSymbolList.First().ArabicValue;
+                var currentSymbol = romanSymbolList[i];
+                var currResult = currentSymbol.ArabicValue;
+                
+                if (CanPullNext(i, romanSymbolList.Length))
+                {
+                    var nextIndex = i + 1;
+                    var next = romanSymbolList[nextIndex];
+                    if(next.ArabicValue > currentSymbol.ArabicValue)
+                    {
+                        currResult = next.ArabicValue - currResult;
+                        i++;
+                    }
+                }
+                
+                result += currResult;
+
             }
-            return romanSymbolList.Sum(x => x.ArabicValue);
+            return result;
         }
+        private static bool CanPullNext(int index, int range) =>
+            IsIndexInRange(index + 1, range);
+        private static bool IsIndexInRange(int index, int range) =>
+            index < range;
 
     }
 }
