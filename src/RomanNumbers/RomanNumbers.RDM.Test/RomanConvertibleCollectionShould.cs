@@ -17,15 +17,16 @@ namespace RomanNumbers.RDM.Test
             var actual = sut.ToString();
             Assert.Equal(exptected, actual);
         }
-        /*
+
         [Theory]
         [InlineData(3, "III")]
         [InlineData(8, "VIII")]
         public void RepetitionCharacters(int input, string exptected)
         {
-            var sut = RomanSymbolComposition.Create(input);
-            Assert.Equal(exptected, sut.ToString());
+            var arabic = new ArabicNumber(input);
+            var sut = RomanConvertibleCollection.FromArabic(arabic);
+            var actual = sut.ToString();
+            Assert.Equal(exptected, actual);
         }
-        */
     }
 }
