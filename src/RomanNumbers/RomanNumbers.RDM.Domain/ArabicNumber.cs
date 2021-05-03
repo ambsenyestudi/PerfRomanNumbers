@@ -54,10 +54,7 @@ namespace RomanNumbers.RDM.Domain
             return num.Value == Value;
         }
 
-        public override int GetHashCode()
-        {
-            return Value;
-        }
+        public override int GetHashCode() => Value;
 
         public int DevidedBy(RomanSymbol romanSymbol) =>
             Value / romanSymbol.ArabicValue;

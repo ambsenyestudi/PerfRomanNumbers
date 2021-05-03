@@ -22,8 +22,13 @@ namespace RomanNumbers.RDM.Domain.Symbols
             });
 
         private static SpecialRomanSymbol[] specialList = GetAll<SpecialRomanSymbols, SpecialRomanSymbol>().ToArray();
+        public static bool ContainsEquivalent(ArabicNumber arabic) =>
+            ContainsEquivalent(arabic.Value);
         public static bool ContainsEquivalent(int num) =>
             specialList.Any(ss => ss.ArabicValue == num);
+
+        public static RomanSymbol[] GetItemsFromEquivalent(ArabicNumber arabic) =>
+            GetItemsFromEquivalent(arabic.Value);
 
         public static RomanSymbol[] GetItemsFromEquivalent(int num) =>
             ContainsEquivalent(num)

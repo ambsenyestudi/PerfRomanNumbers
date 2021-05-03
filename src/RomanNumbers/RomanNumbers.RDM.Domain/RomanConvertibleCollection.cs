@@ -45,10 +45,9 @@ namespace RomanNumbers.RDM.Domain
         }
         private static IEnumerable<RomanSymbol> ExtractSymbolPart(ArabicNumber arabic, RomanSymbol romanSymbol)
         {
-            var num = arabic.Value;
-            if (SpecialRomanSymbols.ContainsEquivalent(num))
+            if (SpecialRomanSymbols.ContainsEquivalent(arabic))
             {
-                return SpecialRomanSymbols.GetItemsFromEquivalent(num);
+                return SpecialRomanSymbols.GetItemsFromEquivalent(arabic);
             }
             var repetition = RomanSymbolRepetition.FromOcurrancesOfSymbol(romanSymbol, arabic);
             return repetition.Equals(RomanSymbolRepetition.Empty)
