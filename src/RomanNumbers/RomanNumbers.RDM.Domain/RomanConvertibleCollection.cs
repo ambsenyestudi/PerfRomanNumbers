@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using RomanNumbers.RDM.Domain.Symbols;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
     public class RomanConvertibleCollection
     {
-        public static RomanConvertibleCollection Empty { get; } = new RomanConvertibleCollection(new RomanSymbol[0]);
+        public static RomanConvertibleCollection Empty { get; } = new RomanConvertibleCollection();
         public RomanConvertible[] Items { get; }
 
-        
-        private RomanConvertibleCollection(RomanConvertible[] items)
+        private RomanConvertibleCollection()
         {
-            Items = items;
+            Items = new RomanSymbol[0];
         }
 
         public RomanConvertibleCollection(ArabicNumber arabic)
@@ -25,7 +25,7 @@ namespace RomanNumbers.RDM.Domain
 
         private static RomanSymbol[] ComposeSymbolsFromNum(int num)
         {
-            var symbolList = RomanSymbol.GetAll()
+            var symbolList = RomanSymbols.GetAll()
                 .Reverse().ToArray();
 
             List<RomanSymbol> result = new List<RomanSymbol>();

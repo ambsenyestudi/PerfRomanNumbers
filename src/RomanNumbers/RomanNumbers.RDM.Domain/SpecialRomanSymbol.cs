@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using RomanNumbers.RDM.Domain.Symbols;
+using System.Linq;
 
 namespace RomanNumbers.RDM.Domain
 {
@@ -7,17 +8,17 @@ namespace RomanNumbers.RDM.Domain
         public static SpecialRomanSymbol IV { get; } = new SpecialRomanSymbol(
             new RomanSymbol[]
             {
-                RomanSymbol.I, RomanSymbol.V
+                RomanSymbols.I, RomanSymbols.V
             });
         public static SpecialRomanSymbol IX { get; } = new SpecialRomanSymbol(
             new RomanSymbol[]
             {
-                RomanSymbol.I, RomanSymbol.X
+                RomanSymbols.I, RomanSymbols.X
             });
         public static SpecialRomanSymbol XL { get; } = new SpecialRomanSymbol(
             new RomanSymbol[]
             {
-                RomanSymbol.X, RomanSymbol.L
+                RomanSymbols.X, RomanSymbols.L
             });
         private static SpecialRomanSymbol[] specialList = new SpecialRomanSymbol[]
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RomanNumbers.RDM.Domain.Symbols;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanNumbers.RDM.Domain

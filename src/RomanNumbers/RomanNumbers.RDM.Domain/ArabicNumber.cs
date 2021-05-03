@@ -1,4 +1,6 @@
-﻿namespace RomanNumbers.RDM.Domain
+﻿using RomanNumbers.RDM.Domain.Symbols;
+
+namespace RomanNumbers.RDM.Domain
 {
     public class ArabicNumber
     {
