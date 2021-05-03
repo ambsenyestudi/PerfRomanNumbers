@@ -48,9 +48,9 @@ namespace RomanNumbers.RDM.Domain
         }
         private static IEnumerable<RomanSymbol> ExtractSymbolPart(int num, RomanSymbol romanSymbol)
         {
-            if (SpecialRomanSymbol.ContainsEquivalent(num))
+            if (SpecialRomanSymbols.ContainsEquivalent(num))
             {
-                return SpecialRomanSymbol.GetItemsFromEquivalent(num);
+                return SpecialRomanSymbols.GetItemsFromEquivalent(num);
             }
             if (romanSymbol.IsSmallerOrEqualTo(num))
             {

@@ -1,4 +1,5 @@
 using RomanNumbers.RDM.Domain;
+using RomanNumbers.RDM.Domain.Symbols;
 using Xunit;
 
 namespace RomanNumbers.RDM.Test

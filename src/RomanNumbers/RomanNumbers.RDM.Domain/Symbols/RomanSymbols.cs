@@ -1,9 +1,8 @@
 ﻿using RomanNumbers.RDM.Domain.Enumerations;
-using RomanNumbers.RDM.Domain.Symbols;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RomanNumbers.RDM.Domain
+namespace RomanNumbers.RDM.Domain.Symbols
 {
     public class RomanSymbols: RichEnumeration
     {
