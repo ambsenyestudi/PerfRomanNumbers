@@ -16,52 +16,44 @@ namespace RomanNumbers.RDM.Domain
 
         public RomanConvertibleCollection(ArabicNumber arabic)
         {
-            var num = arabic.Value;
-            Items = ComposeSymbolsFromNum(num);
+            Items = ComposeSymbolsFromNum(arabic);
         }
 
-        public static RomanSymbol[] FromRepetition(RomanSymbol romanSymbol, int count) =>
-            Enumerable.Repeat(romanSymbol, count).ToArray();
-
-        private static RomanSymbol[] ComposeSymbolsFromNum(int num)
+        private static RomanSymbol[] ComposeSymbolsFromNum(ArabicNumber evaluatingArabic)
         {
+            
             var symbolList = RomanSymbols.GetAll()
                 .Reverse().ToArray();
 
             List<RomanSymbol> result = new List<RomanSymbol>();
-            var currNum = num;
+            var arabic = evaluatingArabic;
             var count = 0;
 
-            while(currNum > 0 && count < symbolList.Length)
+            while(arabic.IsGreaterThan(ArabicNumber.Zero) && count < symbolList.Length)
             {   
                 var currSymbol = symbolList[count];
-                var part = ExtractSymbolPart(currNum, currSymbol);
+                var part = ExtractSymbolPart(arabic, currSymbol);
                 if (part.Any())
                 {
                     result.AddRange(part);
-                    currNum = num - RomanConvertible.ToArabicValue(result.ToArray());
+                    arabic = evaluatingArabic.Substract(result.ToArray());
                 }
                 count++;
             }
             
             return result.ToArray();
         }
-        private static IEnumerable<RomanSymbol> ExtractSymbolPart(int num, RomanSymbol romanSymbol)
+        private static IEnumerable<RomanSymbol> ExtractSymbolPart(ArabicNumber arabic, RomanSymbol romanSymbol)
         {
+            var num = arabic.Value;
             if (SpecialRomanSymbols.ContainsEquivalent(num))
             {
                 return SpecialRomanSymbols.GetItemsFromEquivalent(num);
             }
-            if (romanSymbol.IsSmallerOrEqualTo(num))
-            {
-                if(romanSymbol.IsRepitable)
-                {
-                    var count = num / romanSymbol.ArabicValue;
-                    return FromRepetition(romanSymbol, count);
-                }
-                return new RomanSymbol[] { romanSymbol };
-            }
-            return new RomanSymbol[0];
+            var repetition = RomanSymbolRepetition.FromOcurrancesOfSymbol(romanSymbol, arabic);
+            return repetition.Equals(RomanSymbolRepetition.Empty)
+                ? new RomanSymbol[0]
+                : repetition.Items;
         }
 
         public override string ToString() =>

@@ -6,7 +6,6 @@ namespace RomanNumbers.RDM.Domain.Symbols
     
     public class RomanSymbol : RomanConvertible
     {
-        
         public bool IsRepitable { get; }
 
         internal RomanSymbol(int arabicValue, string romanValue, bool isRepetible= true):base(romanValue, arabicValue)
@@ -14,31 +13,11 @@ namespace RomanNumbers.RDM.Domain.Symbols
             IsRepitable = isRepetible;
         }
 
-        
-
         public bool IsSmallerThan(int num) =>
             ArabicValue < num;
 
         public bool IsSmallerOrEqualTo(int num) =>
             ArabicValue == num || IsSmallerThan(num);
-
-        
-
-        public int CalculateNumberOfOcurrances(int num)
-        {
-            if(num == 0)
-            {
-                return 0;
-            }
-            var result = num / ArabicValue;
-            return result;
-        }
-
-        public RomanSymbol[] GetOccurances(int num) =>
-            Enumerable.Repeat(this, CalculateNumberOfOcurrances(num))
-            .ToArray();
-
-        
 
 
         public override bool Equals(object obj)

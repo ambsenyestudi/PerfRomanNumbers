@@ -6,6 +6,7 @@ namespace RomanNumbers.RDM.Domain.Symbols
 {
     public class RomanSymbols: RichEnumeration
     {
+        public static RomanSymbol Empty = new RomanSymbol(0, "", false);
         public static RomanSymbol I = new RomanSymbol(1, "I");
         public static RomanSymbol V = new RomanSymbol(5, "V", false);
         public static RomanSymbol X = new RomanSymbol(10, "X");

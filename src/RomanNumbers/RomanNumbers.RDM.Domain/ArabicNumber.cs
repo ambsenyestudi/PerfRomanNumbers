@@ -4,19 +4,18 @@ namespace RomanNumbers.RDM.Domain
 {
     public class ArabicNumber
     {
+        public static ArabicNumber Zero { get; } = new ArabicNumber(0);
         public int Value { get; }
         public ArabicNumber(int arabicNumber)
         {
             Value = arabicNumber;
         }
-        public ArabicNumber Substract(params RomanSymbol[] romanSymbolLisst)
+        public ArabicNumber Substract(RomanSymbol[] romanSymbolList)
         {
-            var result = Value;
-            for (int i = 0; i < romanSymbolLisst.Length; i++)
-            {
-                result -= romanSymbolLisst[i].ArabicValue;
-            }
-            return new ArabicNumber(result);
+            var result = Value - RomanConvertible.ToArabicValue(romanSymbolList);
+            return result == 0
+                ? Zero
+                :new ArabicNumber(result);
         }   
 
         public bool IsGreaterThan(RomanSymbol romanSymbol) =>
@@ -28,6 +27,9 @@ namespace RomanNumbers.RDM.Domain
 
         public bool IsNegativeRoman(RomanSymbol romanSymbol) =>
             Value == ToNegative(romanSymbol);
+
+        internal bool IsGreaterThan(ArabicNumber other) =>
+            this.Value > other.Value;
 
         private int ToNegative(RomanSymbol romanSymbol) =>
             romanSymbol.ArabicValue * -1;
